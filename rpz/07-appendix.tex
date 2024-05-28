@@ -1,0 +1,72 @@
+\chapter*{ПРИЛОЖЕНИЕ  А}\label{chp:Appendix1}
+\addcontentsline{toc}{chapter}{ПРИЛОЖЕНИЕ  А}
+
+\setcounter{lstlisting}{0}
+
+\renewcommand\thelstlisting{А.\arabic{lstlisting}}
+
+В Листингах \ref{testbl1}-\ref{testbl2} приведен тест, в ходе которого проверяется существование администратора (например, при входе в систему)
+
+\begin{lstlisting}[label=testbl1, style=mystyle, caption={Тест, в ходе которого проверяется существование администратора (например, при входе в систему) (ч. 1)}]
+	it ('not existing admin', async () => {
+		container.register(AdminRepositoryName, BLTestAdminCreateCorrectWork);
+		container.register(MechanicRepositoryName, BLTestMechanicCreateUserExists);
+		container.register(SheduleRecordRepositoryName, BLTestSheduleRecordCreateCorrectWork);
+		container.register(TimeTableRecordRepositoryName, BLTestTimeTableRecordCreateCorrectWork);
+		container.register(ApplicationRepositoryName, BLTestApplicationNormal);
+		container.register(VocationRepositoryName, BLTestVocationCreateCorrectWork);
+		container.register(ClientRepositoryName, BLTestClientCreateErrorUserExist);
+		const cln = new Vocation();
+		let buf: Id = new Id('1');
+		let startDate = new Date();
+		startDate.setUTCFullYear(2024);
+		startDate.setUTCMonth(6);
+		startDate.setUTCDate(2);
+		startDate.setUTCMilliseconds(0);
+		let endDate = new Date();
+		endDate.setUTCFullYear(2024);
+		endDate.setUTCMonth(6);
+		endDate.setUTCDate(9);
+		endDate.setUTCMilliseconds(0);
+		let today = new Date();
+		today.setUTCFullYear(2024);
+		today.setUTCMonth(4);
+		today.setUTCDate(16);
+		today.setUTCMilliseconds(0);
+\end{lstlisting}
+\newpage
+\begin{lstlisting}[label=testbl2, style=mystyle, caption={Тест, в ходе которого проверяется существование администратора (например, при входе в систему) (ч. 2)}]
+		const prom = await cln.planeVocation({who: buf, startDate: startDate, endDate: endDate, id: buf}, {"id": buf, "type": UserRoles.admin}, today)
+		.catch((error) => {
+			expect(error.message).to.equal(errors.errorUserInDb
+			.userNotExist);
+		});
+	});
+\end{lstlisting}
+
+\chapter*{ПРИЛОЖЕНИЕ  Б}\label{chp:Appendix2}
+\addcontentsline{toc}{chapter}{ПРИЛОЖЕНИЕ  Б}
+
+\setcounter{lstlisting}{0}
+
+\renewcommand\thelstlisting{Б.\arabic{lstlisting}}
+
+На Листингах \ref{lst:1.sh}-\ref{lst:4.sh} приведены коды скрипта, используемого для замера времени выполнения запроса для дальнейшего анализа в исследовании.
+
+\includelistingpretty{1.sh}{}{Скрипт, используемый для исследования времени выполнения (ч. 1)}
+
+\newpage
+
+\includelistingpretty{2.sh}{}{Скрипт, используемый для исследования времени выполнения (ч. 2)}
+
+\newpage
+
+\includelistingpretty{3.sh}{}{Скрипт, используемый для исследования времени выполнения (ч. 3)}
+
+\newpage
+
+\includelistingpretty{4.sh}{}{Скрипт, используемый для исследования времени выполнения (ч. 4)}
+
+\chapter*{ПРИЛОЖЕНИЕ  В}
+\addcontentsline{toc}{chapter}{ПРИЛОЖЕНИЕ  В}
+\section*{Презентация к курсовой работе}

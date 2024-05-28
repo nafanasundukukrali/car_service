@@ -1,0 +1,146 @@
+
+\usepackage{csquotes}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+
+
+\NewBibliographyString{accessmode}
+\DeclareFieldFormat{url}{\bibstring{accessmode}\addcolon\space\url{#1}}
+\DeclareFieldFormat{title}{#1}
+\DefineBibliographyStrings{russian}{
+	accessmode={Режим доступа:},
+	urlseen={дата обращения:}
+}
+
+
+\setenumerate[1]{label={ \arabic*)}}
+\usepackage{enumitem}
+
+\usepackage{placeins}
+\usepackage{cleveref}
+\usepackage{fancyvrb}
+
+\newcommand{\dlr}{\mbox{\textdollar}}
+
+
+\renewcommand\labelitemi{---}
+
+
+\usepackage{pgffor}
+
+\usepackage{longtable}
+
+\usepackage{tabularx,booktabs,caption,ragged2e}
+\newcolumntype{L}{>{\RaggedRight\arraybackslash}X}
+
+
+
+%\captionsetup[table]{justification=raggedleft,singlelinecheck=off}
+
+\renewcommand{\includelistingpretty}[3]
+{
+	\lstinputlisting[
+	language={#2},
+	keywordstyle=\color{keywords},
+	stringstyle=\color{strings},
+	commentstyle=\color{comments},
+	frame=single,
+	numbers=left,
+	extendedchars=true,
+	breaklines=true,
+	numberstyle=\footnotesize\color{numbers},
+	caption={#3},
+	label={lst:#1},
+	]{inc/lst/#1}
+}
+
+\usepackage{listings}
+
+\lstdefinestyle{mystyle}{
+	keywordstyle=\color{keywords},
+	stringstyle=\color{strings},
+	commentstyle=\color{comments},
+	frame=single,
+	numbers=left,
+	extendedchars=true,
+	breaklines=true,
+	numberstyle=\footnotesize\color{numbers}
+}
+
+\usepackage{caption}
+\usepackage{chngcntr}
+
+
+\newcommand{\specialcell}[2][c]{%
+	\begin{tabular}[#1]{@{}c@{}}#2\end{tabular}}
+	
+	
+\titleformat{\chapter}[block]{\hspace{\parindent}\large\bfseries}{\thechapter}{0.5em}{\large\bfseries\raggedright}
+\titleformat{name=\chapter,numberless}[block]{\hspace{\parindent}}{}{-50pt}{\large\bfseries\centering}
+\titleformat{\section}[block]{\hspace{\parindent}\large\bfseries}{\thesection}{0.5em}{\large\bfseries\raggedright}
+\titleformat{\subsection}[block]{\hspace{\parindent}\large\bfseries}{\thesubsection}{0.5em}{\large\bfseries\raggedright}
+\titleformat{\subsubsection}[block]{\hspace{\parindent}\large\bfseries}{\thesubsection}{0.5em}{\large\bfseries\raggedright}
+\titlespacing{\chapter}{12.5mm}{-20pt}{20pt}
+\titlespacing{\section}{12.5mm}{10pt}{10pt}
+\titlespacing{\subsection}{12.5mm}{10pt}{10pt}
+\titlespacing{\subsubsection}{12.5mm}{10pt}{10pt}
+
+\usepackage{siunitx}
+\usepackage{hyperref}
+\usepackage{nameref}
+
+\usepackage{sverb}
+
+%\makeatletter
+%\def\verbatim{\footnotesize\@verbatim\small %\frenchspacing\@vobeyspaces \@xverbatim}
+%\makeatother
+
+	
+\usepackage{verbatim}
+\newenvironment{myverbatim}%
+{\endgraf\noindent MYVERBATIM:\endgraf\verbatim}%
+{\endverbatim}
+
+\makeatletter
+\newenvironment{verbatimlisting}[1]%
+{\def\verbatim@startline{\input{#1}%
+		\def\verbatim@startline{\verbatim@line{}}%
+		\verbatim@startline}%
+\verbatim}{\endverbatim}
+
+\newwrite\verbatim@out
+
+\makeatother
+
+\usepackage{listings}
+
+\usepackage{array, makecell}
+
+
+\usepackage{svg}
+
+
+\newcommand{\myincludesvg}[5]
+{
+	\ifthenelse{\equal{#2}{f}}
+	{
+		\begin{figure}[#3]
+			\center{\includesvg[width=#4]{inc/img/#1}}
+			\caption{#5}
+			\label{img:#1}
+		\end{figure}
+	}
+	{
+		\ifthenelse{\equal{#2}{w}}
+		{
+			\begin{wrapfigure}{#3}{#4}
+				\center{\includesvg[width=#4]{inc/img/#1}}
+				\caption{#5}
+				\label{img:#1}
+			\end{wrapfigure}
+		}
+		{
+			\PackageError{bmstu}{unknown image type}{}	
+		}
+	}
+}

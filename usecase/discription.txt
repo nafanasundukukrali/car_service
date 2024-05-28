@@ -1,0 +1,9 @@
+Предметная область: предварительная запись в офис банка, имеющего несколько филиалах в нескольких городах.
+Я рассмотрела сайты нескольких компаний:
+https://abr.ru/corp/predvaritelnaya-zapis/
+https://www.ubrr.ru/chastnym-klientam/servisy/onlayn-zapis-v-otdelenie-banka
+https://services.open.ru/anketa/enrollment/
+https://www.crediteurope.ru/privately/visit_order/
+https://www.centrinvest.ru/for-individuals/deposits/appointment
+В рамках заданной предметной области были выделены следующие роли: гость, сотрудник, администратор, клиент банка.
+

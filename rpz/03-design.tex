@@ -1,0 +1,279 @@
+\chapter{Конструкторская часть}
+
+В данном разделе будут спроектированы сущности базы данных и ограничения целостности автомобильных сервисов, специализирующихся на иномарках.
+
+\section{Таблицы базы данных}
+
+
+На рисунке \ref{img:datebase} приведена диаграмма базы данных, содержащая информацию о необходимых таблицах для реализации приложения.
+
+\includeimage  
+{datebase}
+{f}
+{H}
+{0.9\textwidth}
+{Диаграмма базы данных}
+
+В таблице \textbf{Client} содержится информация о самостоятельно зарегистрированных пользователях -- клиентах. Таблица содержит поля, описанные в таблице \ref{tab:type1}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type1} Поля таблицы Client}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{id} & Первичный ключ & uuid \\\hline
+		\textbf{email} & Электронная почта клиента & text \\\hline
+		\textbf{fio} & ФИО клиента & text \\\hline
+		\textbf{datebirth} & Дата рождения клиента & timestamp \\\hline
+		\textbf{phone} & Номер телефона клиента & text \\\hline
+		\textbf{password} & Хэш пароля & text \\\hline
+	\end{tabular}
+\end{table}
+
+В таблице \textbf{Car} содержится информация об автомобилях клиентов (после регистрации у клиента не будет связанного с ним автомобилем до того момента, пока он не добавит информацию о нём). Таблица содержит поля, описанные в таблице \ref{tab:type2}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type2} Поля таблицы Car}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{vin} & ИНТС машины & text \\\hline
+		\textbf{nick} & Пользовательский ник для автомобиля & text \\\hline
+		\textbf{year} & Год выпуска автомобиля & integer \\\hline
+		\textbf{mark} & Марка & text \\\hline
+		\textbf{color} & Цвет автомобиля & text \\\hline
+		\textbf{run} & Пробег & integer \\\hline
+		\textbf{owner} & Владелец автомобиля & uuid \\\hline
+	\end{tabular}
+\end{table}
+
+В таблице \textbf{Admin} содержится информация об администраторах автосервиса. Таблица содержит поля, описанные в таблице \ref{tab:type3}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type3} Поля таблицы Admin}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{id} & Первичный ключ & uuid \\\hline
+		\textbf{email} & Электронная почта администратора & text \\\hline
+		\textbf{fio} & ФИО администратора & text \\\hline
+		\textbf{password} & Хэш пароля & text \\\hline
+	\end{tabular}
+\end{table}
+
+В таблице \textbf{MechanicStatus} содержится информация о возможных статусах аккаунта механика. Таблица содержит поля, описанные в таблице \ref{tab:type4}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type4} Поля таблицы MechanicStatus}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{id} & Первичный ключ & Integer \\\hline
+		\textbf{status} & название статуса & text \\\hline
+	\end{tabular}
+\end{table}
+
+В таблице \textbf{Mechanic} содержится информация о механиках. Таблица содержит поля, описанные в таблице \ref{tab:type6}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type6} Поля таблицы Mechanic}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{id} & Первичный ключ & uuid \\\hline
+		\textbf{email} & Адрес электронной почты механика & text \\\hline
+		\textbf{fio} & ФИО механика & text \\\hline
+		\textbf{status} & Статус механика & Integer \\\hline
+		\textbf{password} & Хэш пароля & text \\\hline
+	\end{tabular}
+\end{table}
+
+В таблице \textbf{SheduleStatus} содержится информация о возможных статусах строки в расписании на неделю механика. Таблица содержит поля, описанные в таблице \ref{tab:type18}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type18} Поля таблицы SheduleStatus}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{id} & Первичный ключ & Integer \\\hline
+		\textbf{status} & название статуса & text \\\hline
+	\end{tabular}
+\end{table}
+
+В таблице \textbf{Service} содержится информация об выполняемых в автосервисе услугах. Таблица содержит поля, описанные в таблице \ref{tab:type7}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type7} Поля таблицы Service}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{id} & Первичный ключ & uuid \\\hline
+		\textbf{discription} & Описание услуги & text \\\hline
+		\textbf{name} & Наименование услуги & text \\\hline
+		\textbf{price} & Цена на услугу & numeric(10, 2) \\\hline
+	\end{tabular}
+\end{table}
+
+В таблице \textbf{CanBeServed} содержится информация о механиках, которые могут выполнять данную услугу из таблицы услуг. Таблица содержит поля, описанные в таблице \ref{tab:type8}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type8} Поля таблицы CanBeServed}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{id} & Первичный ключ & uuid \\\hline
+		\textbf{hours} & Длительность услуги  в часах & hours \\\hline
+		\textbf{mechanic} & Механик & uuid \\\hline
+		\textbf{service} & Услуга & uuid \\\hline
+	\end{tabular}
+\end{table}
+
+В таблице \textbf{Box} содержится информация о боксах, которые есть в автосервисе. Таблица содержит поля, описанные в таблице \ref{tab:type9}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type9} Поля таблицы Box}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{id} & Первичный ключ & uuid \\\hline
+		\textbf{number} & Номер бокса & Integer \\\hline
+	\end{tabular}
+\end{table}
+
+В таблице \textbf{Shedule} содержится информация о рабочем расписании механиков в течении одной рабочей недели. Таблица содержит поля, описанные в таблице \ref{tab:type10}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type10} Поля таблицы Shedule}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{id} & Первичный ключ & uuid \\\hline
+		\textbf{starttime} & Время начала работы & timestamp \\\hline
+		\textbf{endtime} & Время конца работы & timestamp \\\hline
+		\textbf{mechanic} & Механик & uuid \\\hline
+		\textbf{status} & Статус расписания & Integer \\\hline
+		\textbf{dayweek} & День недели & Integer \\\hline
+		\textbf{box} & Бокс, в котором в это время работает механик & uuid \\\hline
+	\end{tabular}
+\end{table}
+
+В таблице \textbf{TimeTable} содержится информация о времени записи на каждую услугу клиента. Таблица содержит поля, описанные в таблице \ref{tab:type11}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type11} Поля таблицы TimeTable}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{id} & Первичный ключ & uuid \\\hline
+		\textbf{datetime} & дата и время записи & timestamp \\\hline
+		\textbf{shedule} & Механик и услуга, которую он выполняет & uuid \\\hline
+	\end{tabular}
+\end{table}
+
+В таблице \textbf{ApplicationStatus} содержится информация о возможных статусах заявки. Таблица содержит поля, описанные в таблице \ref{tab:type13}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type13} Поля таблицы ApplicationStatus}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{id} & Первичный ключ & Integer \\\hline
+		\textbf{status} & название статуса & text \\\hline
+	\end{tabular}
+\end{table}
+
+В таблице \textbf{Application} содержится информация о заявках на услуги. Таблица содержит поля, описанные в таблице \ref{tab:type12}.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:type12} Поля таблицы Application}
+	\begin{tabular}{|l|l|c|}
+		\hline \specialcell{Поле} & \specialcell{Описание} &
+		\specialcell{Тип} \\\hline
+		\textbf{id} & Первичный ключ & uuid \\\hline
+		\textbf{status} & Статус заявки на услугу & Integer \\\hline
+		\textbf{comment} & Комментарий механика & text \\\hline
+		\textbf{timerecord} & Дата и время записи в общем расписании & uuid \\\hline
+		\textbf{car} & Машина, на которую заказана услуга & uuid \\\hline
+		\textbf{service} & Услуга, которое должна быть выполнена & uuid \\\hline
+	\end{tabular}
+\end{table}
+
+\section{Ролевая модель}
+
+Основываясь на сценариях использования, представленных на рисунке \ref{img:usecase}, можно выделить следующие роли:
+
+\begin{enumerate}
+	\item гость -- может просматривать только таблицу Service и добавлять записи в таблицу Client;
+	\item клиент -- может совершать следующие действия:
+	\begin{itemize}
+		\item просматривать таблицу Service, Client, Car, Application, ApplicationStatus; 
+		\item добавлять записи в таблицу Car;
+		\item редактировать данные в таблицах Client, Car;
+	\end{itemize}
+	\item механик -- может совершать следующие действия:
+		\begin{itemize}
+		\item просматривать таблицы Service, Application, Shedule, Box, CanBeServed, TimeTable, ApplicationStatus, MechanicStatus, SheduleStatus, Client, Car; 
+		\item редактировать записи в таблице Application, Mechanic;
+		\item создавать записи в таблице Application;
+	\end{itemize}
+		\item администратор -- может совершать следующие действия:
+	\begin{itemize}
+		\item просматривать таблицы ApplicationStatus, MechanicStatus, SheduleStatus, Box;
+		\item просматривать, создавать, редактировать и удалять записи таблиц Service, Application, Car, TimeTable, Shedule, CanBeServed;
+		\item просматривать, создавать, редактировать записи таблиц Client, Admin, Mechanic.
+	\end{itemize}
+\end{enumerate}
+
+\section{Ограничения целостности}
+
+В таблицах Client, Admin, MechanicStatus, Mechanic, Service, CanBeServed, Box, Shedule, TimeTable, ApplicationStatus, Application, Vocation для каждой пары кортежа должно быть определено соответствующее значение входящее в домен. 
+
+В таблице Car, за исключением атрибута nick, для каждой пары кортежа должно быть определено соответствующее значение входящее в домен.
+
+В таблицах Client, Admin, Mechanic значение атрибута email должно быть уникально для каждого кортежа в совокупности.
+
+В таблице Client значение атрибута phone должно быть уникально для каждого кортежа в совокупности.
+
+В таблицах MechanicStatus, ApplicationStatus значение атрибута status должно быть уникально для каждого кортежа.
+
+В таблице Client значение атрибута name должно быть уникально для каждого кортежа в совокупности.
+
+В таблице Box значение атрибута number должно быть уникально для каждого кортежа в совокупности.
+
+В таблицах MechanicStatus и ApplicationStatus должен присутствовать хотя бы один кортеж со значением атрибута id 0. 
+
+\section{Триггеры базы данных}
+
+После того, как администратор добавляет или меняет время работы механика в расписании на неделю необходимо проверить, что составленное расписание не имеет несогласованностей, для чего необходим триггер, реализующий проверку корректности расписания.
+
+Схема алгоритма реализации второго триггера приведена на рисунке \ref{img:trigger}.
+
+\includeimage  
+{trigger}
+{f}
+{H}
+{0.9\textwidth}
+{Схема алгоритма реализации триггера}
+
+\section*{Вывод}
+
+В данном разделе были спроектированы сущности базы данных и ограничения целостности автомобильных сервисов, специализирующихся на иномарках.
+
+
+ 
+
+
+

@@ -1,0 +1,42 @@
+\babel@toc {russian}{}\relax 
+\contentsline {chapter}{ТЕРМИНЫ И ОПРЕДЕЛЕНИЯ}{5}{chapter*.3}%
+\contentsline {chapter}{ОБОЗНАЧЕНИЯ И СОКРАЩЕНИЯ}{6}{chapter*.4}%
+\contentsline {chapter}{РЕФЕРАТ}{7}{chapter*.5}%
+\contentsline {chapter}{ВВЕДЕНИЕ}{8}{chapter*.6}%
+\contentsline {chapter}{\numberline {1}Аналитическая часть}{10}{chapter.1}%
+\contentsline {section}{\numberline {1.1}Анализ существующих решений}{10}{section.1.1}%
+\contentsline {section}{\numberline {1.2}Формализация задачи}{11}{section.1.2}%
+\contentsline {subsection}{\numberline {1.2.1}Описание пользователей проектируемого приложения к базе данных}{11}{subsection.1.2.1}%
+\contentsline {section}{\numberline {1.3}Формализация данных}{12}{section.1.3}%
+\contentsline {section}{\numberline {1.4}Анализ баз данных}{13}{section.1.4}%
+\contentsline {subsection}{\numberline {1.4.1}Дореляционные базы данных}{13}{subsection.1.4.1}%
+\contentsline {subsection}{\numberline {1.4.2}Реляционные базы данных}{14}{subsection.1.4.2}%
+\contentsline {subsection}{\numberline {1.4.3}Постреляционные базы данных}{15}{subsection.1.4.3}%
+\contentsline {subsection}{\numberline {1.4.4}Выбор базы данных}{15}{subsection.1.4.4}%
+\contentsline {section}{\numberline {1.5}Диаграмма сущностей и связей}{15}{section.1.5}%
+\contentsline {chapter}{\numberline {2}Конструкторская часть}{19}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Таблицы базы данных}{19}{section.2.1}%
+\contentsline {section}{\numberline {2.2}Ролевая модель}{24}{section.2.2}%
+\contentsline {section}{\numberline {2.3}Ограничения целостности}{25}{section.2.3}%
+\contentsline {section}{\numberline {2.4}Триггеры базы данных}{25}{section.2.4}%
+\contentsline {chapter}{\numberline {3}Технологическая часть}{27}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Выбор СУБД}{27}{section.3.1}%
+\contentsline {section}{\numberline {3.2}Выбор средств реализации приложения}{28}{section.3.2}%
+\contentsline {section}{\numberline {3.3}Описание реализованных сущностей БД и ограничений целостности}{29}{section.3.3}%
+\contentsline {section}{\numberline {3.4}Описание реализованных триггера и функции}{32}{section.3.4}%
+\contentsline {section}{\numberline {3.5}Описание реализованной ролевой модели}{34}{section.3.5}%
+\contentsline {section}{\numberline {3.6}Методы тестирования разработанного функционала и тесты для проверки корректности работы приложения}{36}{section.3.6}%
+\contentsline {subsection}{\numberline {3.6.1}Тестирование триггера и разработанной функции}{37}{subsection.3.6.1}%
+\contentsline {subsection}{\numberline {3.6.2}Тесты проверки корректности работы приложения}{38}{subsection.3.6.2}%
+\contentsline {section}{\numberline {3.7}Описание интерфейса доступа к базе денных}{39}{section.3.7}%
+\contentsline {section}{Вывод}{39}{figure.caption.33}%
+\contentsline {chapter}{\numberline {4}Исследовательская часть}{40}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Технические характеристики}{40}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Описание исследования}{40}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Результаты исследования}{41}{section.4.3}%
+\contentsline {section}{Вывод}{42}{figure.caption.35}%
+\contentsline {chapter}{ЗАКЛЮЧЕНИЕ}{43}{chapter*.36}%
+\contentsline {chapter}{ПРИЛОЖЕНИЕ А}{44}{chapter*.37}%
+\contentsline {chapter}{ПРИЛОЖЕНИЕ Б}{46}{chapter*.38}%
+\contentsline {chapter}{ПРИЛОЖЕНИЕ В}{50}{chapter*.39}%
+\contentsline {chapter}{СПИСОК ИСПОЛЬЗОВАННЫХ ИСТОЧНИКОВ}{53}{chapter*.40}%

@@ -1,0 +1,345 @@
+\chapter{Технологическая часть}
+
+В данном разделе будут выбраны средства реализации базы данных и приложения, в том числе СУБД. 
+Будут описаны методы тестирования разработанного функционала и тесты для проверки корректности работы приложения.
+
+\section{Выбор СУБД}
+
+Наиболее популярными \cite{dbranking} являются следующие реляционными СУБД:
+
+\begin{enumerate}
+	\item Oracle;
+	\item MySQL;
+	\item Microsoft SQL Server;
+	\item PostgreSQL.
+\end{enumerate}
+
+При выборе СУБД были выделены следующие критерии:
+
+\begin{enumerate}
+	\item Является свободным программным обеспечением \cite{reestrpo};
+	\item Поддерживается наиболее популярными операционными системами \cite{osrating} (Windows, OS X, Linux);
+	\item Наличие опыта работы с СУБД.
+\end{enumerate}
+
+В таблице \ref{tab:compare3} приведено сравнение СУБД по указанным критериям.
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:compare3}Сравнение существующих решений по указанным критериям (ч. 1)}
+	\begin{tabular}{|l|c|c|c|}
+		\hline \specialcell{СУБД} & \specialcell{1} & \specialcell{2} &
+		\specialcell{3} \\\hline
+		Oracle \cite{oracle} & - & + & -\\\hline
+		MySQL \cite{mysql} & + & + & - \\\hline
+		Microsoft SQL Server \cite{microsoft} & - & + & - \\\hline
+		PostgreSQL \cite{postgre} & + & + & + \\\hline
+	\end{tabular}
+\end{table}
+
+Таким образом, выбрана удовлетворяющая всем критериям PostgreSQL.
+
+\section{Выбор средств реализации приложения}
+
+Было реализовано приложение с монолитной архитектурой, диаграмма компонентов которого приведена на Рисунке \ref{img:components.svg}, где BI -- компонент бизнес логики, DataAccess -- компонент доступа к базе данных, CLI -- консольный интерфейс.
+
+\myincludesvg
+{components.svg} 
+{f} 
+{H} 
+{0.9\textwidth} 
+{Диаграмма компонентов}
+
+В качестве языка программирования был выбран typescript \cite{typescript} в силу наличия соответствующих средств, обеспечивающих взаимодействия с выбранной СУБД, и опыта работы с данным языком программирования. 
+Для кросс-платформленности приложения и возможности в перспективе работы на сервере использовалась среда выполнения Node.js \cite{nodejs}. 
+Для обеспечения взаимодействия приложения с базой данных была выбрана Prisma ORM \cite{prismaorm}.
+
+\section{Описание реализованных сущностей БД и ограничений целостности}
+
+На Листингах \ref{tb1}-\ref{tb13} приведены скрипты создания необходимых таблиц на языке PL/pgSQL \cite{plpgsql}, используемого для работы с PostgreSQL, с учётом ранее описанных ограничений целостности.
+
+\begin{lstlisting}[label=tb1, style=mystyle, caption=Создание таблицы Client и соотвествующих ограничений целостности]
+	create table if not exists AutoService.Client (
+	id			uuid default gen_random_uuid() primary key,
+	email       text not null unique,
+	fio         text not null,
+	datebirth   timestamp not null check(extract(year from age(datebirth)) > 18),
+	phone       text not null unique,
+	password  text not null
+	);
+\end{lstlisting}
+
+\begin{lstlisting}[label=tb2, style=mystyle, caption=Создание таблицы Car и соотвествующих ограничений целостности]
+	create table if not exists AutoService.Car (
+	vin			text primary key,
+	nick       	text,
+	year        integer not null,
+	mark	   	text not null,
+	color       text not null,
+	run  		integer not null,
+	owner_		uuid not null,
+	foreign key(owner_) references AutoService.Client (id) on delete cascade
+	);
+\end{lstlisting}
+
+\begin{lstlisting}[label=tb3, style=mystyle, caption=Создание таблицы MechanicStatus и соотвествующих ограничений целостности]
+	create table if not exists AutoService.MechanicStatus (
+	id			integer default 0 primary key,
+	status		text not null unique
+	);
+\end{lstlisting}
+
+\begin{lstlisting}[label=tb4, style=mystyle, caption=Создание таблицы Mechanic и соотвествующих ограничений целостности]
+	create table if not exists AutoService.Mechanic (
+	id			uuid default gen_random_uuid() primary key,
+	email       text not null unique,
+	fio         text not null,
+	status		integer default 0,
+	password 	text not null,
+	foreign key (status) references AutoService.MechanicStatus (id)
+	);
+\end{lstlisting}
+
+\begin{lstlisting}[label=tb5, style=mystyle, caption=Создание таблицы Service и соотвествующих ограничений целостности]
+	create table if not exists AutoService.Service (
+	id			uuid default gen_random_uuid() primary key,
+	discription text not null,
+	name        text not null unique,
+	price		numeric(10,2)
+	);
+\end{lstlisting}
+
+\begin{lstlisting}[label=tb6, style=mystyle, caption=Создание таблицы CanBeServed и соотвествующих ограничений целостности]
+	create table if not exists AutoService.CanBeServed (
+	id			uuid default gen_random_uuid() primary key,
+	hours		integer not null,
+	mechanic	uuid not null,
+	service		uuid not null,
+	foreign key (service) references AutoService.Service (id),
+	foreign key (mechanic) references AutoService.Mechanic (id)
+	);
+\end{lstlisting}
+
+\begin{lstlisting}[label=tb7, style=mystyle, caption=Создание таблицы Box и соотвествующих ограничений целостности]
+	create table if not exists AutoService.Box (
+	id			uuid default gen_random_uuid() primary key,
+	number		integer not null unique
+	);
+\end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}[label=tb8, style=mystyle, caption=Создание таблицы SheduleStatus и соотвествующих ограничений целостности]
+	create table if not exists AutoService.SheduleStatus (
+	id			integer default 0 primary key,
+	status		text not null unique
+	);
+\end{lstlisting}
+
+\begin{lstlisting}[label=tb9, style=mystyle, caption=Создание таблицы Shedule и соотвествующих ограничений целостности]
+	create table if not exists AutoService.Shedule (
+	id			uuid default gen_random_uuid() primary key,
+	starttime	time not null,
+	endtime		time not null,
+	mechanic	uuid not null,
+	box			uuid not null,
+	dayweek		int not null,
+	status		integer default 0,
+	foreign key (box) references AutoService.Box (id) on delete cascade,
+	foreign key (mechanic) references AutoService.Mechanic (id),
+	foreign key (status) references AutoService.SheduleStatus
+	);
+\end{lstlisting}
+
+\begin{lstlisting}[label=tb10, style=mystyle, caption=Создание таблицы TimeTable и соотвествующих ограничений целостности]
+	create table if not exists AutoService.TimeTable (
+	id			uuid default gen_random_uuid() primary key,
+	datetime	timestamp not null,
+	shedule 	uuid not null,
+	foreign key (shedule) references AutoService.Shedule (id)
+	);
+\end{lstlisting}
+
+\begin{lstlisting}[label=tb11, style=mystyle, caption=Создание таблицы ApplicationStatus и соотвествующих ограничений целостности]
+	create table if not exists AutoService.ApplicationStatus (
+	id			integer default 0 primary key,
+	status		text not null unique
+	);
+\end{lstlisting}
+
+\begin{lstlisting}[label=tb12, style=mystyle, caption=Создание таблицы Application и соотвествующих ограничений целостности]
+	create table if not exists AutoService.Application(
+	id			uuid default gen_random_uuid() primary key,
+	timerecord	uuid default null,
+	comment 	text default null, 
+	service		uuid not null,
+	status 		integer default 0 not null,
+	car 		text not null,
+	foreign key (status) references AutoService.ApplicationStatus (id),
+	foreign key (timerecord) references AutoService.TimeTable (id) on delete cascade,
+	foreign key (car) references AutoService.Car (vin) on delete cascade,
+	foreign key (service) references AutoService.Service (id)
+	);
+\end{lstlisting}
+
+\begin{lstlisting}[label=tb13, style=mystyle, caption=Создание таблицы Vocation и соотвествующих ограничений целостности]
+	create table if not exists AutoService.Vocation (
+	id			uuid default gen_random_uuid() primary key,
+	start_date	timestamp not null,
+	end_date	timestamp not null check (date_trunc('day', start_date) < date_trunc('day', end_date) and 
+	(date_trunc('day', current_date) < date_trunc('day', start_date) or 
+	date_trunc('day', current_date) > date_trunc('day', end_date)
+	)),
+	mechanic	uuid not null,
+	foreign key (mechanic) references AutoService.Mechanic (id)
+	);
+\end{lstlisting}
+
+\section{Описание реализованных триггера и функции}
+
+На Листингах \ref{lst:trigger1.sql}-\ref{lst:trigger2.sql}  приведена реализация алгоритма триггера на добавление строки в таблицы \textbf{Client}, \textbf{Admi1n}, \textbf{Mechanic}.
+
+\newpage
+
+\includelistingpretty{trigger1.sql}{}{Реализация алгоритма триггера на добавление строки в таблицы Client, Admin, Mechanic(ч. 1)}
+
+\newpage
+
+\includelistingpretty{trigger2.sql}{}{Реализация алгоритма триггера на добавление строки в таблицы Client, Admin, Mechanic(ч. 2)}
+
+\section{Описание реализованной ролевой модели}
+
+На Листинге \ref{guest} приведен скрипт для создания роли гостя на языке PL/pgSQL.
+
+\begin{lstlisting}[label=guest, style=mystyle, caption=Скрипт для создания роли гостя на языке PL/pgSQL]
+	revoke all privileges on all tables in schema AutoService from public;
+	grant select on AutoService.Service to public;
+	grant insert on AutoService.Client to public;
+\end{lstlisting}
+
+На Листингах \ref{admin1}-\ref{admin2} приведен скрипт для создания роли администратора на языке PL/pgSQL.
+
+\begin{lstlisting}[label=admin1, style=mystyle, caption=Скрипт для создания роли администратора на языке PL/pgSQL(ч. 1)]
+	create role admin with createrole;
+	grant select on AutoService.SheduleStatus to admin;
+	grant select on AutoService.MechanicStatus to admin;
+	grant select on AutoService.Box to admin;
+	grant select on AutoService.ApplicationStatus to admin;
+	grant select, insert, update, delete on AutoService.Service to admin;
+	grant select, insert, update, delete on AutoService.Application to admin;
+	grant select, insert, update, delete on AutoService.Car to admin;
+	grant select, insert, update, delete on AutoService.TimeTable to admin;
+\end{lstlisting}
+
+\begin{lstlisting}[label=admin2, style=mystyle, caption=Скрипт для создания роли администратора на языке PL/pgSQL(ч. 2)]
+	grant select, insert, update, delete on AutoService.Shedule to admin;
+	grant select, insert, update, delete on AutoService.CanBeServed to admin;
+	grant select, insert, update on AutoService.Admin to admin;
+	grant select, insert, update on AutoService.Mechanic to admin;
+	grant select, insert, update on AutoService.Client to admin;
+	grant select, insert, update, delete on AutoService.TimeTable to admin;
+	grant select, insert, update, delete on AutoService.Shedule to admin;
+	grant select, insert, update, delete on AutoService.CanBeServed to admin;
+	grant select, insert, update on AutoService.Admin to admin;
+	grant select, insert, update on AutoService.Mechanic to admin;
+	grant select, insert, update on AutoService.Client to admin;
+\end{lstlisting}
+
+На Листинге \ref{mechanic} приведен скрипт для создания роли механика на языке PL/pgSQL.
+
+\newpage
+
+\begin{lstlisting}[label=mechanic, style=mystyle, caption=Скрипт для создания роли механика на языке PL/pgSQL]
+	create role mechanic;
+	grant select on AutoService.Application to mechanic;
+	grant select on AutoService.Shedule to mechanic;
+	grant select on AutoService.CanBeServed to mechanic;
+	grant select on AutoService.TimeTable to mechanic;
+	grant select on AutoService.SheduleStatus to mechanic;
+	grant select on AutoService.MechanicStatus to mechanic;
+	grant select on AutoService.Box to mechanic;
+	grant select on AutoService.ApplicationStatus to mechanic;
+	grant select on AutoService.Client to mechanic;
+	grant select on AutoService.Car to mechanic;
+	grant update on AutoService.Application to mechanic;
+	grant update on AutoService.Mechanic to mechanic;
+	grant insert on AutoService.Application to mechanic;
+\end{lstlisting}
+
+На Листинге \ref{client} приведен скрипт для создания роли клиента на языке PL/pgSQL.
+
+\begin{lstlisting}[label=client, style=mystyle, caption=Скрипт для создания роли клиента на языке PL/pgSQL]
+	create role client;
+	grant select on AutoService.Application to client;
+	grant select on AutoService.Client to client;
+	grant select on AutoService.Car to client;
+	grant select on AutoService.ApplicationStatus to client;
+	grant update on AutoService.Client to client;
+	grant update on AutoService.Car to client;
+	grant insert on AutoService.Car to client;
+\end{lstlisting}
+
+\section{Методы тестирования разработанного функционала и тесты для проверки корректности работы приложения}
+
+В рамках разработанного приложения и базы данных предлагается модульное тестирование в качестве метода.
+
+\subsection{Тестирование триггера и разработанной функции}
+
+Согласно схеме алгоритма триггера, приведённой на Рисунке \ref{trigger}, в алгоритме присутствует проверка уникальности адреса электронной почты в таблицах \textbf{Client}, \textbf{Admin}, \textbf{Mechanic}. 
+
+В Таблице \ref{tab:teststrigger1} приведены классы эквивалентности, модульные тесты и ожидаемый результат (ч. 1).
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:teststrigger1}Модульное тестирование триггера базы данных (ч. 1)}
+	\begin{tabular}{|l|c|c|c|}
+		\hline \specialcell{№} & \specialcell{Класс\\эквивалентности} & \specialcell{Запрос для теста} & \specialcell{Результат}\\\hline
+		1 & \makecell{Запись с уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Client}} & \makecell{insert into AutoService\\.Client(email, fio,\\ datebirth, phone, \\password)\\values ('veronika@k.ru', \\'Olga Kirova', '2003-06-04', \\'89267677888', '123');} & -\\\hline
+		2 & \makecell{Запись с уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Admin}} & \makecell{insert into AutoService\\.Admin(email, fio,\\ password)\\values ('vaeronika@k.ru',\\'Olga Kirova', '123');} & - \\\hline
+		3 & \makecell{Запись с уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Mechanic}} & \makecell{insert into AutoService.\\Mechanic(email, fio,\\ password)\\values ('vmronika@k.ru',\\'Olga Kirova', '123');} & - \\\hline
+	\end{tabular}
+\end{table}
+
+В Таблице \ref{tab:teststrigger2} приведены классы эквивалентности, модульные тесты и ожидаемый результат (ч. 2).
+
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:teststrigger2}Модульное тестирование триггера базы данных (ч. 2)}
+	\begin{tabular}{|l|c|c|c|}
+		\hline \specialcell{№} & \specialcell{Класс\\эквивалентности} & \specialcell{Запрос для теста} & \specialcell{Результат}\\\hline
+		4 & \makecell{Запись с не уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Client}} & \makecell{insert into AutoService\\.Admin(email, fio,\\ password)\\values ('veronika@k.ru',\\'Olga Kirova', '123');} & \makecell{existing admin\\with\\same email} \\\hline
+		5 & \makecell{Запись с не уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Admin}} & \makecell{insert into AutoService\\.Client(email, fio, datebirth,\\phone, password)\\values ('vaeronika@k.ru',\\'Olga Kirova', '2003-06-04',\\'8926767088', '123');} & \makecell{existing mechanic\\with\\same email} \\\hline
+		6 & \makecell{Запись с не уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Mechanic}} & \makecell{insert into AutoService\\.Mechanic(email, fio,\\password)\\values ('vmronika@k.ru',\\'Olga Kirova', '123');} & \makecell{existing admin\\with\\same email} \\\hline
+	\end{tabular}
+\end{table}
+
+В ходе тестирования запросы, приведённые в Таблицах \ref{tab:teststrigger1}-\ref{tab:teststrigger2}, выполнялись последовательно и был получен соответствующий результат. 
+
+Не было обнаружено средств, благодаря которым можно было бы определить проверить покрытие тестами реализованный триггерами.
+
+\subsection{Тесты проверки корректности работы приложения}
+
+Для компонентов бизнес логики и доступа к базе данных, приведенных на Рисунке \ref{img:components.svg}, были разработаны модульные тесты и оценено покрытие ими разработанного функционала. Тесты были созданы с использованием пакета TS-Mocha \cite{mocha}, а покрытие было подсчитано с использованием функций пакета c8 \cite{c8}. 
+Пример разработанного теста для бизнес логики приведен в \hyperref[chp:Appendix1]{Приложении А}.
+
+\section{Описание интерфейса доступа к базе денных}
+
+Было разработано консольное приложение. 
+В приложении на каждое действие пользователя выводится или результат предыдущего действия, или сообщение системы, или меню, с помощью которого, вводя пункт меню или данные, пользователь может взаимодействовать с системой.
+На Рисунке \ref{img:demo} продемонстрировано, как выглядит приложение при запуске.
+
+\includeimage  
+{demo}
+{f}
+{H}
+{0.9\textwidth}
+{Демонстрация работы приложения}
+
+\section*{Вывод}
+\addcontentsline{toc}{section}{Вывод}
+
+В данном разделе были выбраны средства реализации базы данных и приложения, в том числе СУБД. 
+
+Была выбрана СУБД  PostgreSQL, язык программирования typescript, среда выполнения Node.js, Prisma ORM с целью обеспечения взаимодействия приложения с базой данных.
+
+Были описаны методы тестирования разработанного функционала и тесты для проверки корректности работы приложения.
