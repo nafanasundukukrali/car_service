@@ -1,0 +1,10 @@
+export const ClientName = "Client";
+export const MechanicName = "Mechanic";
+export const AdminName = "Admin";
+export const SheduleRecordName = "SheduleRecord";
+export const ApplicationName = "Application";
+export const TimeTableRecordName = "TimeTableRecord";
+export const VocationName = "Vocation";
+export const BoxName = "Box";
+export const CarName = "Car";
+export const ServiceName = "Service";

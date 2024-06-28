@@ -1,0 +1,1 @@
+export type PositiveInteger = number & { __isPositiveInteger: true };

@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "checkJs": true,
+    "allowJs": true,
+    "module": "ES2022",
+    "moduleResolution": "node",
+    "target": "ES2022",
+    "outDir": "./build",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "importHelpers": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src*"],
+      "@blinterfaces/*": ["src/bl/interfaces/*"],
+      "@bltypes/*" : ["src/bl/types/*"],
+      "@blrealization/*" : ["src/bl/realization/*"],
+      "@blerrors/*" : ["src/bl/errors/*"],
+      "@da/*" : ["src/da/*"]
+    }
+  },
+  "include": [
+    "./**/*.ts"
+  ]
+  
+}

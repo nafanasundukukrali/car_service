@@ -4,28 +4,20 @@
 \bibliography{./biblio.bib}
 
 \begin{document}
-	\makecourseworktitle
-	{Информатика и системы управления} 
-	{Программное обеспечение ЭВМ и информационные технологии} 
-	{Разработка базы данных автомобильного сервиса специализирующегося на брендах, не оказывающих поддержку в России} 
-	{Конкина~А.~Н./ИУ7-63Б}
-	{Констрицкий~А.~С.} 
-	{}
-	{}
+	\includepdf[pages=-]{titletz}
 	
-	\setcounter{page}{3}
+	\include{00-referat}
 	
 	\maketableofcontents
 	
 	\include{002-basedef}
 	\include{001-definitions}
-	\include{00-referat}
 	\include{01-introduction}
 	\include{02-analysis}
 	\include{03-design}
 	\include{04-implement}
 	\include{05-research}
 	\include{06-conclusion}
+	\makebibliography
 	\include{07-appendix}
-	\makebibliography	
 \end{document}

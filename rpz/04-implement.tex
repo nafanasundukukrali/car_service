@@ -5,7 +5,7 @@
 
 \section{Выбор СУБД}
 
-Наиболее популярными \cite{dbranking} являются следующие реляционными СУБД:
+Наиболее популярными\cite{dbranking} являются следующие реляционными СУБД:
 
 \begin{enumerate}
 	\item Oracle;
@@ -17,9 +17,9 @@
 При выборе СУБД были выделены следующие критерии:
 
 \begin{enumerate}
-	\item Является свободным программным обеспечением \cite{reestrpo};
-	\item Поддерживается наиболее популярными операционными системами \cite{osrating} (Windows, OS X, Linux);
-	\item Наличие опыта работы с СУБД.
+	\item является свободным программным обеспечением\cite{reestrpo};
+	\item поддерживается наиболее популярными операционными системами\cite{osrating} (Windows, OS X, Linux);
+	\item наличие опыта работы с СУБД.
 \end{enumerate}
 
 В таблице \ref{tab:compare3} приведено сравнение СУБД по указанным критериям.
@@ -30,10 +30,10 @@
 	\begin{tabular}{|l|c|c|c|}
 		\hline \specialcell{СУБД} & \specialcell{1} & \specialcell{2} &
 		\specialcell{3} \\\hline
-		Oracle \cite{oracle} & - & + & -\\\hline
-		MySQL \cite{mysql} & + & + & - \\\hline
-		Microsoft SQL Server \cite{microsoft} & - & + & - \\\hline
-		PostgreSQL \cite{postgre} & + & + & + \\\hline
+		Oracle\cite{oracle} & - & + & -\\\hline
+		MySQL\cite{mysql} & + & + & - \\\hline
+		Microsoft SQL Server\cite{microsoft} & - & + & - \\\hline
+		PostgreSQL\cite{postgre} & + & + & + \\\hline
 	\end{tabular}
 \end{table}
 
@@ -50,13 +50,13 @@
 {0.9\textwidth} 
 {Диаграмма компонентов}
 
-В качестве языка программирования был выбран typescript \cite{typescript} в силу наличия соответствующих средств, обеспечивающих взаимодействия с выбранной СУБД, и опыта работы с данным языком программирования. 
-Для кросс-платформленности приложения и возможности в перспективе работы на сервере использовалась среда выполнения Node.js \cite{nodejs}. 
-Для обеспечения взаимодействия приложения с базой данных была выбрана Prisma ORM \cite{prismaorm}.
+В качестве языка программирования был выбран typescript\cite{typescript} в силу наличия соответствующих средств, обеспечивающих взаимодействия с выбранной СУБД, и опыта работы с данным языком программирования. 
+Для кросс-платформленности приложения и возможности в перспективе работы на сервере использовалась среда выполнения Node.js\cite{nodejs}. 
+Для обеспечения взаимодействия приложения с базой данных была выбрана Prisma ORM\cite{prismaorm}.
 
 \section{Описание реализованных сущностей БД и ограничений целостности}
 
-На Листингах \ref{tb1}-\ref{tb13} приведены скрипты создания необходимых таблиц на языке PL/pgSQL \cite{plpgsql}, используемого для работы с PostgreSQL, с учётом ранее описанных ограничений целостности.
+На Листингах \ref{tb1}-\ref{tb13} приведены скрипты создания необходимых таблиц на языке PL/pgSQL\cite{plpgsql}, используемого для работы с PostgreSQL, с учётом ранее описанных ограничений целостности.
 
 \begin{lstlisting}[label=tb1, style=mystyle, caption=Создание таблицы Client и соотвествующих ограничений целостности]
 	create table if not exists AutoService.Client (
@@ -247,8 +247,6 @@
 
 На Листинге \ref{mechanic} приведен скрипт для создания роли механика на языке PL/pgSQL.
 
-\newpage
-
 \begin{lstlisting}[label=mechanic, style=mystyle, caption=Скрипт для создания роли механика на языке PL/pgSQL]
 	create role mechanic;
 	grant select on AutoService.Application to mechanic;
@@ -267,6 +265,8 @@
 \end{lstlisting}
 
 На Листинге \ref{client} приведен скрипт для создания роли клиента на языке PL/pgSQL.
+
+\newpage
 
 \begin{lstlisting}[label=client, style=mystyle, caption=Скрипт для создания роли клиента на языке PL/pgSQL]
 	create role client;
@@ -287,39 +287,64 @@
 
 Согласно схеме алгоритма триггера, приведённой на Рисунке \ref{trigger}, в алгоритме присутствует проверка уникальности адреса электронной почты в таблицах \textbf{Client}, \textbf{Admin}, \textbf{Mechanic}. 
 
-В Таблице \ref{tab:teststrigger1} приведены классы эквивалентности, модульные тесты и ожидаемый результат (ч. 1).
+В Таблицах \ref{tab:teststrigger1}-\ref{tab:teststrigger4} приведены классы эквивалентности, модульные тесты и ожидаемый результат.
 
 \begin{table}[H]
 	\centering
 	\caption{\label{tab:teststrigger1}Модульное тестирование триггера базы данных (ч. 1)}
-	\begin{tabular}{|l|c|c|c|}
+	\begin{tabular}{|l|l|l|l|}
 		\hline \specialcell{№} & \specialcell{Класс\\эквивалентности} & \specialcell{Запрос для теста} & \specialcell{Результат}\\\hline
-		1 & \makecell{Запись с уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Client}} & \makecell{insert into AutoService\\.Client(email, fio,\\ datebirth, phone, \\password)\\values ('veronika@k.ru', \\'Olga Kirova', '2003-06-04', \\'89267677888', '123');} & -\\\hline
-		2 & \makecell{Запись с уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Admin}} & \makecell{insert into AutoService\\.Admin(email, fio,\\ password)\\values ('vaeronika@k.ru',\\'Olga Kirova', '123');} & - \\\hline
-		3 & \makecell{Запись с уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Mechanic}} & \makecell{insert into AutoService.\\Mechanic(email, fio,\\ password)\\values ('vmronika@k.ru',\\'Olga Kirova', '123');} & - \\\hline
+		1 & \makecell{Запись с уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Client}} & \makecell{insert into AutoService\\.Client(email, fio,\\ datebirth, phone, \\password)\\values ('veronika@k.ru', \\'Olga Kirova', '2003-06-04', \\'89267677888', '123');} & insert 1\\\hline
 	\end{tabular}
 \end{table}
-
-В Таблице \ref{tab:teststrigger2} приведены классы эквивалентности, модульные тесты и ожидаемый результат (ч. 2).
 
 \begin{table}[H]
 	\centering
 	\caption{\label{tab:teststrigger2}Модульное тестирование триггера базы данных (ч. 2)}
-	\begin{tabular}{|l|c|c|c|}
+	\begin{tabular}{|l|l|l|l|}
 		\hline \specialcell{№} & \specialcell{Класс\\эквивалентности} & \specialcell{Запрос для теста} & \specialcell{Результат}\\\hline
-		4 & \makecell{Запись с не уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Client}} & \makecell{insert into AutoService\\.Admin(email, fio,\\ password)\\values ('veronika@k.ru',\\'Olga Kirova', '123');} & \makecell{existing admin\\with\\same email} \\\hline
-		5 & \makecell{Запись с не уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Admin}} & \makecell{insert into AutoService\\.Client(email, fio, datebirth,\\phone, password)\\values ('vaeronika@k.ru',\\'Olga Kirova', '2003-06-04',\\'8926767088', '123');} & \makecell{existing mechanic\\with\\same email} \\\hline
-		6 & \makecell{Запись с не уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Mechanic}} & \makecell{insert into AutoService\\.Mechanic(email, fio,\\password)\\values ('vmronika@k.ru',\\'Olga Kirova', '123');} & \makecell{existing admin\\with\\same email} \\\hline
+		2 & \makecell{Запись с уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Admin}} & \makecell{insert into AutoService\\.Admin(email, fio,\\ password)\\values ('vaeronika@k.ru',\\'Olga Kirova', '123');} & insert 1 \\\hline
+		3 & \makecell{Запись с уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Mechanic}} & \makecell{insert into AutoService.\\Mechanic(email, fio,\\ password)\\values ('vmronika@k.ru',\\'Olga Kirova', '123');} & insert 1 \\\hline
+		4 & \makecell{Запись с\\не уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Client}} & \makecell{insert into AutoService\\.Admin(email, fio,\\ password)\\values ('veronika@k.ru',\\'Olga Kirova', '123');} & \makecell{existing admin\\with\\same email} \\\hline
+		5 & \makecell{Запись с\\не уникальным\\на три таблицы\\адресом добавляется\\в таблицу \textbf{Admin}} & \makecell{insert into AutoService\\.Client(email, fio, datebirth,\\phone, password)\\values ('vaeronika@k.ru',\\'Olga Kirova', '2003-06-04',\\'8926767088', '123');} & \makecell{existing mechanic\\with\\same email} \\\hline
+		6 & \makecell{Запись с на\\три таблицы\\не уникальным\\адресом добавляется\\в таблицу \textbf{Mechanic}} & \makecell{insert into AutoService\\.Mechanic(email, fio,\\password)\\values ('vmronika@k.ru',\\'Olga Kirova', '123');} & \makecell{existing admin\\with\\same email} \\\hline
 	\end{tabular}
 \end{table}
 
-В ходе тестирования запросы, приведённые в Таблицах \ref{tab:teststrigger1}-\ref{tab:teststrigger2}, выполнялись последовательно и был получен соответствующий результат. 
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:teststrigger3}Модульное тестирование триггера базы данных (ч. 3)}
+	\begin{tabular}{|l|l|l|l|}
+		\hline \specialcell{№} & \specialcell{Класс\\эквивалентности} & \specialcell{Запрос для теста} & \specialcell{Результат}\\\hline
+		7 & \makecell{Новая почта\\клиента уникальна\\на три таблицы} & \makecell{update  AutoService.Client\\
+			set email='val@.ko'\\ where email='veronika@k.ru';} & updated 1 \\\hline
+		8 & \makecell{Новая почта\\администратора\\уникальна\\на три таблицы} & \makecell{update  AutoService.Admin\\set email='vaa@.ko'\\where email='vaeronika@k.ru';} & updated 1 \\\hline
+		9 & \makecell{Новая почта\\механика\\уникальна\\на три таблицы} & \makecell{update AutoService.Mechanic\\set email='vam@.ko'\\where email='vmronika@k.ru';} & updated 1 \\\hline
+		10 & \makecell{Новая почта\\клиента\\не уникальна\\на три таблицы} & \makecell{update  AutoService.Client\\set email='vam@.ko'\\where email='val@.ko';} & \makecell{existing mechanic\\with\\same email} \\\hline
+		11 & \makecell{Новая почта\\механика\\не уникальна\\на три таблицы} & \makecell{update  AutoService.Mechanic\\set email='vaa@.ko'\\where email='vam@.ko';} & \makecell{existing admin\\with\\same email}\\\hline
+		12 & \makecell{Новая почта\\администратора\\не уникальна\\на три таблицы} & \makecell{update  AutoService.Admin\\set email='vam@.ko'\\where email='vaa@.ko'} & \makecell{existing mechanic\\with\\same email} \\\hline
+		13 & \makecell{Один и тот же\\адрес клиента} & \makecell{update  AutoService.Client\\
+			set email='val@.ko'\\ where email='val@.ko'';} & updated 1 \\\hline
+		14 & \makecell{Один и тот же\\адрес механика} & \makecell{update  AutoService.Mechanic\\set email='vam@.ko'\\where email='vam@.ko';} & updated 1 \\\hline
+	\end{tabular}
+\end{table}
 
-Не было обнаружено средств, благодаря которым можно было бы определить проверить покрытие тестами реализованный триггерами.
+\begin{table}[H]
+	\centering
+	\caption{\label{tab:teststrigger4}Модульное тестирование триггера базы данных (ч. 4)}
+	\begin{tabular}{|l|l|l|l|}
+		\hline \specialcell{№} & \specialcell{Класс\\эквивалентности} & \specialcell{Запрос для теста} & \specialcell{Результат}\\\hline
+		15 & \makecell{Один и тот же\\адрес\\администратора} & \makecell{update AutoService.Admin\\set email='vaa@.ko'\\where email='vaa@.ko';} & updated 1 \\\hline
+	\end{tabular}
+\end{table}
+
+В ходе тестирования запросы, приведённые в Таблицах \ref{tab:teststrigger1}-\ref{tab:teststrigger4}, были выполнены. После выполнения в случае успеха проверялось, что текущее состояние кортежа соответствует ожидаемому и был получено соответствующее таблице сообщение. В случае ожидаемой неудачи проверялось, что выводится соответствующее таблице сообщение об ошибке и состояние кортежа соответствует предыдущему.
+
+Метрик, предоставляющих возможность оценить покрытие тестами, не было обнаружено.
 
 \subsection{Тесты проверки корректности работы приложения}
 
-Для компонентов бизнес логики и доступа к базе данных, приведенных на Рисунке \ref{img:components.svg}, были разработаны модульные тесты и оценено покрытие ими разработанного функционала. Тесты были созданы с использованием пакета TS-Mocha \cite{mocha}, а покрытие было подсчитано с использованием функций пакета c8 \cite{c8}. 
+Для компонентов бизнес логики и доступа к базе данных, приведенных на Рисунке \ref{img:components.svg}, были разработаны модульные тесты и оценено покрытие ими разработанного функционала. Тесты были созданы с использованием пакета TS-Mocha\cite{mocha}, а покрытие было подсчитано с использованием функций пакета c8\cite{c8}. 
 Пример разработанного теста для бизнес логики приведен в \hyperref[chp:Appendix1]{Приложении А}.
 
 \section{Описание интерфейса доступа к базе денных}
@@ -336,7 +361,6 @@
 {Демонстрация работы приложения}
 
 \section*{Вывод}
-\addcontentsline{toc}{section}{Вывод}
 
 В данном разделе были выбраны средства реализации базы данных и приложения, в том числе СУБД. 
 
