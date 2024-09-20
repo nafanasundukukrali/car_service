@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import { AdminName, ApplicationName, BoxName, CarName, ClientName, MechanicName, ServiceName, SheduleRecordName, TimeTableRecordName, VocationName } from "@blinterfaces/realization/interfacesnames";
+import { AdminName, ApplicationName, BoxName, CarName, ClientName, MechanicName, ServiceName, SheduleRecordName, TimeTableRecordName, VocationName } from "@asinterfaces/realization/interfacesnames";
 import { Admin } from "@blrealization/admin/admin";
 import { Application } from "@blrealization/application/application";
 import { Box } from "@blrealization/box/box";
@@ -12,9 +12,12 @@ import { TimeTableRecord } from "@blrealization/timetablerecord/timetablerecord"
 import { Vocation } from "@blrealization/vocation/vocation";
 import { DAInjectionReg } from "@da/dainjection";
 import { container } from "tsyringe";
+import Logger from "@logger/logger";
 
 export default class RegisterDependency {
     constructor () {
+        Logger.info("Register dependency injections");
+        
         new DAInjectionReg();
         container.register(ClientName, Client);
         container.register(MechanicName, Mechanic);

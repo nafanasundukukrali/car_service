@@ -1,15 +1,15 @@
 import { expect, assert } from 'chai';
 import 'mocha';
 import { container } from 'tsyringe';
-import { AdminRepositoryName, MechanicRepositoryName, TimeTableRecordRepositoryName} from '@//bl/interfaces/repository/interfacesnames';
+import { AdminRepositoryName, MechanicRepositoryName, TimeTableRecordRepositoryName} from '@asinterfaces/repository/interfacesnames';
 import { BLTestAdminCreateUserExist, BLTestAdminNoUser } from './bltest/bltestadmin';
 import { BLTestMechanicCreateCorrectWork, BLTestMechanicCreateUserExists } from './bltest/bltestmechanic';
 import { BLTestTimeTableRecordCreateCorrectWork, BLTestTimeTableRecordVocationReturnTImeRecords } from './bltest/bltimetablerecord';
 import { TimeTableRecord } from '@blrealization/timetablerecord/timetablerecord';
 import { errorUserInDb } from '@blerrors/user/usererrors';
-import { Id } from '@bltypes/id/id';
-import { UserRoles } from '@bltypes/userinfo/userinfo';
-import { TimeTableRecordList } from '@bltypes/timetablerecordinfo/timetablerecordinfo';
+import { Id } from '@astypes/id/id';
+import { UserRoles } from '@astypes/userinfo/userinfo';
+import { TimeTableRecordList } from '@astypes/timetablerecordinfo/timetablerecordinfo';
 
 describe('search', () => {
     it('initiator admin not exists', async () => {

@@ -1,12 +1,12 @@
 import { container, injectable } from "tsyringe";
-import { NotRequireID } from "@bltypes/helperpath/helpertypes";
+import { NotRequireID } from "@astypes/helperpath/helpertypes";
 import { prisma } from "../../prismaclient";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
-import { Id } from "@bltypes/id/id";
-import { SheduleRecordInfo } from "@bltypes/shedulerecordinfo/shedulerecordinfo";
-import { ISheduleRecordRepository } from "@blinterfaces/repository/ISheduleRecordRepository.interface";
-import { BaseStatus } from "@bltypes/basestatus/basestatus";
-import { AchivedStatusType } from '@bltypes/achivedstatus/achivedstatus';
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { Id } from "@astypes/id/id";
+import { SheduleRecordInfo } from "@astypes/shedulerecordinfo/shedulerecordinfo";
+import { ISheduleRecordRepository } from "@asinterfaces/repository/ISheduleRecordRepository.interface";
+import { BaseStatus } from "@astypes/basestatus/basestatus";
+import { AchivedStatusType } from '@astypes/achivedstatus/achivedstatus';
 
 @injectable()
 export class PsqlSheduleRecord implements ISheduleRecordRepository

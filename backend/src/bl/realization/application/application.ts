@@ -1,29 +1,29 @@
 import { container, injectable } from "tsyringe";
-import { IApplicationRepository } from "@blinterfaces/repository/IApplicationRepository.interface";
-import { AdminInfo } from "@bltypes/admininfo/admininfo";
-import { IMechanicRepository } from "@blinterfaces/repository/IMechanicRepository.interface";
-import { IAdminRepository } from "@blinterfaces/repository/IAdminRepository.interface";
-import { ApplicationInfo } from "@bltypes/applicationinfo/applicationinfo";
+import { IApplicationRepository } from "@asinterfaces/repository/IApplicationRepository.interface";
+import { AdminInfo } from "@astypes/admininfo/admininfo";
+import { IMechanicRepository } from "@asinterfaces/repository/IMechanicRepository.interface";
+import { IAdminRepository } from "@asinterfaces/repository/IAdminRepository.interface";
+import { ApplicationInfo } from "@astypes/applicationinfo/applicationinfo";
 import {  errorDataAccess } from "@blerrors/user/usererrors";
-import { ITimeTableRecordRepository } from "@blinterfaces/repository/ITimeTableRecordRepository.interface";
-import { ClientInfo } from '@bltypes/clientinfo/clientinfo';
-import { MechanicInfo } from "@bltypes/mechanicinfo/mechanicinfo";
-import { IClientRepository } from "@blinterfaces/repository/IClientRepository.interface";
-import { NotRequireID } from "@bltypes/helperpath/helpertypes";
-import { setCreatedStatus, setSavedStatus } from "../applicationstatus/applicationstatus";
-import { TimeTableRecordInfo} from '@bltypes/timetablerecordinfo/timetablerecordinfo';
-import { ISheduleRecordRepository } from "@blinterfaces/repository/ISheduleRecordRepository.interface";
+import { ITimeTableRecordRepository } from "@asinterfaces/repository/ITimeTableRecordRepository.interface";
+import { ClientInfo } from '@astypes/clientinfo/clientinfo';
+import { MechanicInfo } from "@astypes/mechanicinfo/mechanicinfo";
+import { IClientRepository } from "@asinterfaces/repository/IClientRepository.interface";
+import { NotRequireID } from "@astypes/helperpath/helpertypes";
+import { setCreatedStatus, setSavedStatus } from "@astypes/applicationstatus/applicationstatus";
+import { TimeTableRecordInfo} from '@astypes/timetablerecordinfo/timetablerecordinfo';
+import { ISheduleRecordRepository } from "@asinterfaces/repository/ISheduleRecordRepository.interface";
 import { errorApplicationExisting } from "@blerrors/application/applicationerrors";
 import { errorImpossibleCreateTimeTableRecord, errorImpossibleUpdateRecord } from "@blerrors/timetablerecord/timtablerecorderrors";
-import { Id } from "@bltypes/id/id";
-import { ICarRepository } from "@blinterfaces/repository/ICarRepository.interface";
-import { CarInfo } from "@bltypes/carinfo/carinfo";
+import { Id } from "@astypes/id/id";
+import { ICarRepository } from "@asinterfaces/repository/ICarRepository.interface";
+import { CarInfo } from "@astypes/carinfo/carinfo";
 import { RealizationBase } from "../realizationbase";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
-import { IApplication } from "@blinterfaces/realization/IApplication.interface";
-import { AdminRepositoryName, ClientRepositoryName, MechanicRepositoryName, SheduleRecordRepositoryName, TimeTableRecordRepositoryName, ApplicationRepositoryName, CarRepositoryName } from '../../interfaces/repository/interfacesnames';
-import { PositiveInteger } from "@bltypes/positiveinteger"
-import { log } from "console";
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { IApplication } from "@asinterfaces/realization/IApplication.interface";
+import { AdminRepositoryName, ClientRepositoryName, MechanicRepositoryName, SheduleRecordRepositoryName, TimeTableRecordRepositoryName, ApplicationRepositoryName, CarRepositoryName } from '@asinterfaces/repository/interfacesnames';
+import { PositiveInteger } from "@astypes/positiveinteger"
+import Logger from "@logger/logger";
 
 @injectable()
 export class Application extends RealizationBase implements IApplication
@@ -38,6 +38,7 @@ export class Application extends RealizationBase implements IApplication
 
     private async _validate_existing_application(info: Partial<ApplicationInfo>)
     {
+        Logger.info('Validate existing of application, application id = ' + info.id.getStringVersion());
         let arr: ApplicationInfo[] = await this._applicationRepository.search(info);
 
         return arr.length >= 1;
@@ -45,6 +46,7 @@ export class Application extends RealizationBase implements IApplication
 
     private async _validate_timerecord_info(info: TimeTableRecordInfo | Partial<TimeTableRecordInfo>)
     {
+        Logger.info("Validate time")
         if (!info.sheduleRecord || !Id.isId(info.sheduleRecord))
             throw Error(errorImpossibleUpdateRecord.noSheduleInfo);
 
@@ -112,10 +114,10 @@ export class Application extends RealizationBase implements IApplication
         let count: number = 0;
         for (const key in info)
         {
-            if (info[key] != 'id' && info[key] != 'mechanicComment' && info[key] !== undefined)
-                throw Error(errorDataAccess.impossibleAccess);
-            else if (info[key] === 'id' || info[key] === 'mechanicComment')
+            if (key === 'id' || key === 'mechanicComment')
                 count++;
+            else
+                throw Error(errorDataAccess.impossibleAccess);
         }
 
         if (count !== 2)

@@ -1,19 +1,20 @@
 import "reflect-metadata";
-import { IClient } from '@blinterfaces/realization/IClient.interface';
+import { IClient } from '@asinterfaces/realization/IClient.interface';
 import Input from '../input/input';
-import { IAdmin } from '@blinterfaces/realization/IAdmin.interface';
-import { IMechanic } from '@blinterfaces/realization/IMechanic.interface';
-import Auth from '@blrealization/auth/auth';
-import { UserRoles } from '@bltypes/userinfo/userinfo';
+import { IAdmin } from '@asinterfaces/realization/IAdmin.interface';
+import { IMechanic } from '@asinterfaces/realization/IMechanic.interface';
+import Auth from '../auth/auth';
+import { UserRoles } from '@astypes/userinfo/userinfo';
 import { container } from "tsyringe";
-import { AdminName, CarName, ClientName, MechanicName } from "@//bl/interfaces/realization/interfacesnames";
-import { AdminInfo } from '@//bl/types/admininfo/admininfo';
+import { AdminName, CarName, ClientName, MechanicName } from "@asinterfaces/realization/interfacesnames";
+import { AdminInfo } from '@astypes/admininfo/admininfo';
 import ILanguageModel from "../languagemodel/ILanguageModel.inteface";
 import { LanguageModel } from "../depencecli";
-import { ClientInfo } from "@//bl/types/clientinfo/clientinfo";
-import { ICar } from "@//bl/interfaces/realization/ICar.interface";
+import { ClientInfo } from "@astypes/clientinfo/clientinfo";
+import { ICar } from "@asinterfaces/realization/ICar.interface";
 import { Table } from 'console-table-printer';
-import { CarInfo } from "@//bl/types/carinfo/carinfo";
+import { CarInfo } from "@astypes/carinfo/carinfo";
+import { MechanicInfo } from "@astypes/mechanicinfo/mechanicinfo";
 
 export default class CarCLI {
     private _input: Input;
@@ -35,9 +36,13 @@ export default class CarCLI {
         this._auth = new Auth();
     }
 
-    private async _printCarListClient(initiator: ClientInfo)
+    private async _print_car_list_client(initiator: ClientInfo | AdminInfo | MechanicInfo, clientInfo: ClientInfo, carInfo: Partial<CarInfo> | undefined = undefined)
     {
-        this._last_carlist = await this._car.search({owner: initiator.id}, initiator);
+
+        if (carInfo == undefined)
+            this._last_carlist = await this._car.search({owner: clientInfo.id}, clientInfo);
+        else
+            this._last_carlist = await this._car.search({...carInfo}, clientInfo);
 
         if (this._last_carlist.length === 0)
         {
@@ -63,50 +68,16 @@ export default class CarCLI {
     }
 
 
-    async printCarList(initiator: ClientInfo | AdminInfo) {
-        if (initiator.type == UserRoles.client)
-            await this._printCarListClient(initiator);
-        // let services: CarInfo [] = await this._car.search({owner: initiator.id}, initiator);
-
-        // if (services.length === 0)
-        // {
-        //     console.log(this._lm.carListEmpty);
-        //     return;
-        // }
-
-        // if (initiator.type == UserRoles.client)
-        // {
-        //     const p = new Table({
-        //         columns: [
-        //             { name: 'c1', title: this._lm.carNick }, 
-        //             { name: 'c2', title: this._lm.carMark }, 
-        //             { name: 'c3', title: this._lm.carYear },
-        //             { name: 'c4', title: this._lm.carColor },
-        //             { name: 'c5', title: this._lm.carVIN },
-        //           ],
-        //     });
-        // }
-        // else
-        // {
-        //     const p = new Table({
-        //         columns: [
-        //             { name: 'c1', title: this._lm.carNick }, 
-        //             { name: 'c2', title: this._lm.carMark }, 
-        //             { name: 'c3', title: this._lm.carYear }, 
-        //           ],
-        //     });
-        // }
-
-    
-        // for (let i = 0; i < services.length; i++)
-        //     p.addRow({c1: services[i].name, c2: services[i].discription, c3: services[i].price})
-
-        // p.printTable();
+    async print_car_list(initiator: ClientInfo | AdminInfo | MechanicInfo, clientInfo: ClientInfo, carInfo: Partial<CarInfo> | undefined = undefined) {
+        return await this._print_car_list_client(initiator, clientInfo, carInfo);
     }
 
-    async get_car_number(initiator: ClientInfo, outquestion: string)
+    async get_car_number(initiator: ClientInfo | AdminInfo | MechanicInfo, client: ClientInfo, outquestion: string)
     {
-        await this._printCarListClient(initiator);
+        if (initiator.type == UserRoles.mechanic)
+            return;
+        
+        await this._print_car_list_client(initiator, client);
 
         if (this._last_carlist.length === 0)
             return;
@@ -133,18 +104,24 @@ export default class CarCLI {
         return this._last_carlist[i - 1];
     }
 
-    private async _updateCarClient(initiator: ClientInfo)
+    async updateCarClient(initiator: ClientInfo | AdminInfo, clientInfo: ClientInfo)
     {
-        let crinf: CarInfo | undefined = await this.get_car_number(initiator, this._lm.outUpdateCarQuestion)
+        let crinf: CarInfo | undefined = await this.get_car_number(initiator, clientInfo, this._lm.outUpdateCarQuestion)
 
         if (crinf === undefined)
             return;
+
+        if (initiator.type == UserRoles.admin)
+        {
+            await this._upateCarByAdmin(initiator, crinf.VIN, clientInfo);
+            return;
+        }
 
         let nick = await this._input.askQuestion(this._lm.askCarNick);
 
         if (nick !== '' && nick !== "\n" && nick !== undefined && crinf !== undefined)
             try {
-                await this._car.update({VIN: crinf.VIN, nick: nick, owner: initiator.id}, initiator);
+                await this._car.update({VIN: crinf.VIN, nick: nick, owner: clientInfo.id}, initiator);
             }
             catch (error)
             {
@@ -194,31 +171,81 @@ export default class CarCLI {
         }
     }
 
-    async updateCarList(initiator: ClientInfo)
+    private async _upateCarByAdmin(initiator: AdminInfo, VIN: string, owner: ClientInfo)
     {
-        let cars: CarInfo [] = await this._car.search({owner: initiator.id}, initiator);
+        while (true)
+        {
+            let nick: string | undefined = await this._input.askQuestion(this._lm.askCarNick);
+
+            if (nick === "")
+            {
+                let ans = "";
+
+                while(ans != this._lm.yes && ans != this._lm.no)
+                    ans = await this._input.askQuestion(this._lm.askCarNickEmpty);
+
+                if (ans != this._lm.yes) nick = undefined;
+            }
+
+            let mark: string = await this._input.wait_until_input(this._lm.askCarMark, this._lm.outAddCarQuestion);
+            let run: number = await this._input.wait_input_positive_integer(this._lm.askCarRun, this._lm.outAddCarQuestion);
+            let color: string = await this._input.wait_until_input(this._lm.askCarColor, this._lm.outAddCarQuestion);
+            let Year: number = await this._input.wait_input_positive_integer(this._lm.askCarYear, this._lm.outAddCarQuestion);
+            let car: Required<CarInfo> = {VIN: VIN, mark: mark, nick: nick, year: Year, run: run, color: color, owner: owner.id};
+
+            try {
+                this._car.update(car, initiator);
+
+                return;
+            }
+            catch(error) {
+                console.log(error.message);
+            }
+
+            console.log(this._lm.inputIncorrect);
+            let out = await this._input.askQuestion(this._lm.outAddCarQuestion);
+
+            if (out === this._lm.yes) return;
+        }
+    }
+
+    async updateCarList(initiator: ClientInfo | AdminInfo, clientInfo: ClientInfo)
+    {
+        let cars: CarInfo [] = await this._car.search({owner: clientInfo.id}, initiator);
 
         while (true)
         {
             console.log(this._lm.askInputNumber)
-            let i = 1;
+
+            let i = 0; 
+
+            if (initiator.type === UserRoles.client)
+                i++;
+
             if (cars.length !== 0 )
             {
                 console.log(i + '. ' + this._lm.carUpdate);
                 i++;
             }
             console.log(i + '. ' + this._lm.carAdd);
+            i++;
+            console.log(i + '. ' + this._lm.carExit);
 
             let num = await this._input.askQuestion("")
 
-            if (cars.length !== 0 && num === '1')
+            if (cars.length !== 0 && num === '0')
             {
-                await this._updateCarClient(initiator)
+                await this.updateCarClient(initiator, clientInfo);
+
                 return;
             }
-            else if (num === '2' || num === '1')
+            else if (cars.length !== 0 && num === '1')
             {
-                await this._addCar(initiator)
+                await this._addCar(clientInfo)
+                return;
+            }
+            else if (num === '3')
+            {
                 return;
             }
 

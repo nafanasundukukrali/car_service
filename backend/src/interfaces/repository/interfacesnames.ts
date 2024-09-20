@@ -1,0 +1,10 @@
+export const ClientRepositoryName = "ClientRepository";
+export const MechanicRepositoryName = "MechanicRepository";
+export const AdminRepositoryName = "AdminRepository";
+export const SheduleRecordRepositoryName = "SheduleRecordRepository";
+export const ApplicationRepositoryName = "ApplicationRepository";
+export const TimeTableRecordRepositoryName = "TimeTableRecordRepository";
+export const VocationRepositoryName = "VocationRepository";
+export const BoxRepositoryName = "BoxRepository";
+export const CarRepositoryName = "CarRepository";
+export const ServiceRepositoryName = "ServiceRepository";

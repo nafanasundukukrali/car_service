@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 import { Box } from "@blrealization/box/box";
 import 'mocha';
 import * as errors from '@blerrors/user/usererrors';
-import { Id } from "@bltypes/id/id";
+import { Id } from "@astypes/id/id";
 
 import { BLTestClientCreateCorrectWork, BLTestClientCreateErrorUserExist } from "./bltest/bltestclient";
 import { BLTestMechanicCreateCorrectWork, BLTestMechanicCreateUserExists } from './bltest/bltestmechanic';
@@ -12,11 +12,11 @@ import { BLTestBoxCorrect } from "./bltest/bltestbox";
 import {    ClientRepositoryName, 
             AdminRepositoryName,
             MechanicRepositoryName,
-            BoxRepositoryName } from "@blinterfaces/repository/interfacesnames";
-import { AdminInfo } from "@bltypes/admininfo/admininfo";
-import { ClientInfo } from "@bltypes/clientinfo/clientinfo";
-import { MechanicInfo } from "@bltypes/mechanicinfo/mechanicinfo";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
+            BoxRepositoryName } from "@asinterfaces/repository/interfacesnames";
+import { AdminInfo } from "@astypes/admininfo/admininfo";
+import { ClientInfo } from "@astypes/clientinfo/clientinfo";
+import { MechanicInfo } from "@astypes/mechanicinfo/mechanicinfo";
+import { UserRoles } from "@astypes/userinfo/userinfo";
 import { deepEqual } from 'assert';
 import { expect } from "chai";
 
@@ -141,4 +141,21 @@ describe('get list Box', () => {
       let id_2 = new Id('2');
       expect(prom).is.deep.equal([{id: id_1, number: 1}, {id: id_2, number: 2}]);
     });
+
+    it ('not exitsting user', async () => {
+      container.register(ClientRepositoryName, BLTestClientCreateErrorUserExist);
+      container.register(MechanicRepositoryName, BLTestMechanicCreateUserExists);
+      container.register(AdminRepositoryName, BLTestAdminCreateUserExist);
+      container.register(BoxRepositoryName, BLTestBoxCorrect);
+    
+      const idAdmin: Id = new Id('23231848484884');
+      const idBox: Id = new Id(1);
+
+      const admin: AdminInfo = {id: idAdmin, type: UserRoles.admin};
+      const cln = new Box();
+      await cln.getListOfAll(admin)
+      .catch((error) => {
+        expect(error.message).to.equal(errors.errorUserInDb.userNotExist);
+      });
+    })
 });

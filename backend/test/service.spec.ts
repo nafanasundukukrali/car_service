@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 import { Box } from "@blrealization/box/box";
 import 'mocha';
 import * as errors from '@blerrors/user/usererrors';
-import { Id } from "@bltypes/id/id";
+import { Id } from "@astypes/id/id";
 
 import { BLTestClientCreateCorrectWork, BLTestClientCreateErrorUserExist } from "./bltest/bltestclient";
 import { BLTestMechanicCreateCorrectWork, BLTestMechanicCreateUserExists } from './bltest/bltestmechanic';
@@ -12,11 +12,11 @@ import { BLTestService } from "./bltest/bltestservice";
 import {    ClientRepositoryName, 
             AdminRepositoryName,
             MechanicRepositoryName,
-            ServiceRepositoryName } from "@blinterfaces/repository/interfacesnames";
-import { AdminInfo } from "@bltypes/admininfo/admininfo";
-import { ClientInfo } from "@bltypes/clientinfo/clientinfo";
-import { MechanicInfo } from "@bltypes/mechanicinfo/mechanicinfo";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
+            ServiceRepositoryName } from "@asinterfaces/repository/interfacesnames";
+import { AdminInfo } from "@astypes/admininfo/admininfo";
+import { ClientInfo } from "@astypes/clientinfo/clientinfo";
+import { MechanicInfo } from "@astypes/mechanicinfo/mechanicinfo";
+import { UserRoles } from "@astypes/userinfo/userinfo";
 import { deepEqual } from 'assert';
 import { expect } from "chai";
 import { Service } from "@blrealization/service/service";

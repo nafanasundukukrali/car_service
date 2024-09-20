@@ -1,5 +1,5 @@
 import { container, injectable } from "tsyringe";
-import { IStartDayWorker } from "@blinterfaces/repository/IStartDayWorker.inerace";
+import { IStartDayWorker } from "@asinterfaces/repository/IStartDayWorker.inerace";
 import { Vocation } from "../vocation/vocation";
 
 @injectable()

@@ -2,9 +2,9 @@ import { expect, assert } from 'chai';
 import 'mocha';
 import { container } from 'tsyringe';
 import { DAInjectionReg } from '@da/dainjection';
-import { UserRoles } from '@bltypes/userinfo/userinfo';
-import { MechanicRepositoryName } from '@blinterfaces/repository/interfacesnames';
-import { IMechanicRepository } from '@blinterfaces/repository/IMechanicRepository.interface';
+import { UserRoles } from '@astypes/userinfo/userinfo';
+import { MechanicRepositoryName } from '@asinterfaces/repository/interfacesnames';
+import { IMechanicRepository } from '@asinterfaces/repository/IMechanicRepository.interface';
 
 new DAInjectionReg();
 const mechanic: IMechanicRepository = container.resolve(MechanicRepositoryName);

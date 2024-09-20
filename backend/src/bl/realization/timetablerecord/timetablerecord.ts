@@ -1,19 +1,19 @@
 import { container, injectable } from "tsyringe";
-import { AdminInfo } from "@bltypes/admininfo/admininfo";
-import { IMechanicRepository } from "@//bl/interfaces/repository/IMechanicRepository.interface";
-import { MechanicInfo } from "@bltypes/mechanicinfo/mechanicinfo";
-import { IAdminRepository } from "@//bl/interfaces/repository/IAdminRepository.interface";
+import { AdminInfo } from "@astypes/admininfo/admininfo";
+import { IMechanicRepository } from "@asinterfaces/repository/IMechanicRepository.interface";
+import { MechanicInfo } from "@astypes/mechanicinfo/mechanicinfo";
+import { IAdminRepository } from "@asinterfaces/repository/IAdminRepository.interface";
 import {  errorDataAccess } from "@blerrors/user/usererrors";
-import { ITimeTableRecordRepository } from "@//bl/interfaces/repository/ITimeTableRecordRepository.interface";
-import { TimeTableRecordInfo } from "@bltypes/timetablerecordinfo/timetablerecordinfo";
-import { Id } from "@bltypes/id/id";
-import { NotRequireID } from "@bltypes/helperpath/helpertypes";
+import { ITimeTableRecordRepository } from "@asinterfaces/repository/ITimeTableRecordRepository.interface";
+import { TimeTableRecordInfo } from "@astypes/timetablerecordinfo/timetablerecordinfo";
+import { Id } from "@astypes/id/id";
+import { NotRequireID } from "@astypes/helperpath/helpertypes";
 import { RealizationBase } from "../realizationbase";
-import { ITimeTableRecord } from "@blinterfaces/realization/ITimeTableRecord.interface";
-import { AdminRepositoryName, MechanicRepositoryName, TimeTableRecordRepositoryName } from '@blinterfaces/repository/interfacesnames';
-import { UserRoles } from "../../types/userinfo/userinfo";
-import { PositiveInteger } from "@bltypes/positiveinteger"
-import { TimeTableRecordList } from "@bltypes/timetablerecordinfo/timetablerecordinfo";
+import { ITimeTableRecord } from "@asinterfaces/realization/ITimeTableRecord.interface";
+import { AdminRepositoryName, MechanicRepositoryName, TimeTableRecordRepositoryName } from '@asinterfaces/repository/interfacesnames';
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { PositiveInteger } from "@astypes/positiveinteger"
+import { TimeTableRecordList } from "@astypes/timetablerecordinfo/timetablerecordinfo";
 
 @injectable()
 export class TimeTableRecord extends RealizationBase implements ITimeTableRecord

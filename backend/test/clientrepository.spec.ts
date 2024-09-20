@@ -1,10 +1,10 @@
 import { expect, assert } from 'chai';
 import 'mocha';
 import { container } from 'tsyringe';
-import { ClientRepositoryName } from '@blinterfaces/repository/interfacesnames';
+import { ClientRepositoryName } from '@asinterfaces/repository/interfacesnames';
 import { DAInjectionReg } from '@da/dainjection';
-import { IClientRepository } from '@blinterfaces/repository/IClientRepository.interface';
-import { UserRoles } from '@bltypes/userinfo/userinfo';
+import { IClientRepository } from '@asinterfaces/repository/IClientRepository.interface';
+import { UserRoles } from '@astypes/userinfo/userinfo';
 
 new DAInjectionReg();
 const client: IClientRepository = container.resolve(ClientRepositoryName);

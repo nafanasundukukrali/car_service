@@ -1,9 +1,9 @@
-import { IAdminRepository } from "@blinterfaces/repository/IAdminRepository.interface";
+import { IAdminRepository } from "@asinterfaces/repository/IAdminRepository.interface";
 import { injectable } from "tsyringe";
-import { AdminInfo } from '@bltypes/admininfo/admininfo';
-import { NotRequireID } from '@bltypes/helperpath/helpertypes';
-import { Id } from "@bltypes/id/id";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
+import { AdminInfo } from '@astypes/admininfo/admininfo';
+import { NotRequireID } from '@astypes/helperpath/helpertypes';
+import { Id } from "@astypes/id/id";
+import { UserRoles } from "@astypes/userinfo/userinfo";
 
 @injectable()
 export class BLTestAdminCreateCorrectWork implements IAdminRepository {

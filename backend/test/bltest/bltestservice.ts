@@ -1,7 +1,7 @@
 import { injectable } from "tsyringe";
-import { IServiceRepository } from "@blinterfaces/repository/IServiceRepository.interface";
-import { ServiceInfo } from "@bltypes/serviceinfo/serviceinfo";
-import { Id } from "@bltypes/id/id";
+import { IServiceRepository } from "@asinterfaces/repository/IServiceRepository.interface";
+import { ServiceInfo } from "@astypes/serviceinfo/serviceinfo";
+import { Id } from "@astypes/id/id";
 
 @injectable()
 export class BLTestService implements IServiceRepository{

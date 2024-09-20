@@ -1,9 +1,9 @@
-import { IBoxRepository } from "@blinterfaces/repository/IBoxRepository,interface";
+import { IBoxRepository } from "@asinterfaces/repository/IBoxRepository,interface";
 import { injectable } from "tsyringe";
-import { BoxInfo } from "@bltypes/boxinfo/boxinfo";
-import { NotRequireID } from '@bltypes/helperpath/helpertypes';
-import { Id } from "@bltypes/id/id";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
+import { BoxInfo } from "@astypes/boxinfo/boxinfo";
+import { NotRequireID } from '@astypes/helperpath/helpertypes';
+import { Id } from "@astypes/id/id";
+import { UserRoles } from "@astypes/userinfo/userinfo";
 
 @injectable()
 export class BLTestBoxCorrect implements IBoxRepository {

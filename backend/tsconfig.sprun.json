@@ -1,0 +1,15 @@
+{
+  "extends" : "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "paths": {
+      "@/*": ["src*"],
+      "@asinterfaces/*": ["src/interfaces/*"],
+      "@logger/*" : ["src/utils/logger/*"],
+      "@astypes/*" : ["src/types/*"],
+      "@blrealization/*" : ["src/bl/realization/*"],
+      "@blerrors/*" : ["src/bl/errors/*"],
+      "@da/*" : ["src/da/*"]
+    }
+  }
+}

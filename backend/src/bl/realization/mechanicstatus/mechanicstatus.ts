@@ -1,5 +1,5 @@
-import { MechanicStatus } from '@bltypes/mechanicstatus/mechanicstatus';
-import { MechanicStatusType } from '@bltypes/mechanicstatus/mechanicstatus';
+import { MechanicStatus } from '@astypes/mechanicstatus/mechanicstatus';
+import { MechanicStatusType } from '@astypes/mechanicstatus/mechanicstatus';
 
 export async function setVocation<T extends {status?: MechanicStatus}> (input: T): Promise<undefined> {
     input.status = MechanicStatusType.inVocation;

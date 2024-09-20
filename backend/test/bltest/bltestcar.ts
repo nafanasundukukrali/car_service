@@ -1,7 +1,7 @@
-import { ICarRepository } from "@//bl/interfaces/repository/ICarRepository.interface";
+import { ICarRepository } from "@asinterfaces/repository/ICarRepository.interface";
 import { injectable } from "tsyringe";
-import { CarInfo } from "@bltypes/carinfo/carinfo";
-import { Id } from "@bltypes/id/id";
+import { CarInfo } from "@astypes/carinfo/carinfo";
+import { Id } from "@astypes/id/id";
 
 @injectable()
 export class BLTestCarCreateCorrectWork implements ICarRepository {

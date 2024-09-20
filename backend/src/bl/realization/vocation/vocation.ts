@@ -1,26 +1,26 @@
 import { container, injectable } from "tsyringe";
-import { IMechanicRepository } from "@blinterfaces/repository/IMechanicRepository.interface";
-import { IVocationRepository } from "@blinterfaces/repository/IVocationRepository.interface";
-import { IAdminRepository } from "@blinterfaces/repository/IAdminRepository.interface";
-import { VocationInfo } from "@bltypes/vocationinfo/vocationinfo";
-import { NotRequireID } from "@bltypes/helperpath/helpertypes";
-import { AdminInfo } from "@bltypes/admininfo/admininfo";
+import { IMechanicRepository } from "@asinterfaces/repository/IMechanicRepository.interface";
+import { IVocationRepository } from "@asinterfaces/repository/IVocationRepository.interface";
+import { IAdminRepository } from "@asinterfaces/repository/IAdminRepository.interface";
+import { VocationInfo } from "@astypes/vocationinfo/vocationinfo";
+import { NotRequireID } from "@astypes/helperpath/helpertypes";
+import { AdminInfo } from "@astypes/admininfo/admininfo";
 import { errorDataAccess, errorUserInDb } from "@blerrors/user/usererrors";
 import { errorVocationDrop, errorVocationExisting, errorVocationPlane } from "@blerrors/vocation/vocationerror";
-import { TimeTableRecordInfo } from "@bltypes/timetablerecordinfo/timetablerecordinfo";
-import { ITimeTableRecordRepository } from "@blinterfaces/repository/ITimeTableRecordRepository.interface";
-import { SheduleRecordInfo } from "@bltypes/shedulerecordinfo/shedulerecordinfo";
-import { ISheduleRecordRepository } from "@blinterfaces/repository/ISheduleRecordRepository.interface";
-import { ApplicationInfo } from "@bltypes/applicationinfo/applicationinfo";
-import { IApplicationRepository } from "@blinterfaces/repository/IApplicationRepository.interface";
-import { isClosed, setDirtyStatus } from "../applicationstatus/applicationstatus";
+import { TimeTableRecordInfo } from "@astypes/timetablerecordinfo/timetablerecordinfo";
+import { ITimeTableRecordRepository } from "@asinterfaces/repository/ITimeTableRecordRepository.interface";
+import { SheduleRecordInfo } from "@astypes/shedulerecordinfo/shedulerecordinfo";
+import { ISheduleRecordRepository } from "@asinterfaces/repository/ISheduleRecordRepository.interface";
+import { ApplicationInfo } from "@astypes/applicationinfo/applicationinfo";
+import { IApplicationRepository } from "@asinterfaces/repository/IApplicationRepository.interface";
+import { isClosed, setDirtyStatus } from "@astypes/applicationstatus/applicationstatus";
 import { setSavedStatus } from "../changeachivedstatus/changeachivedstatus";
-import { MechanicInfo } from "@bltypes/mechanicinfo/mechanicinfo";
+import { MechanicInfo } from "@astypes/mechanicinfo/mechanicinfo";
 import { isInVocation, setVocation } from "../mechanicstatus/mechanicstatus";
-import { AdminRepositoryName, ApplicationRepositoryName, MechanicRepositoryName, SheduleRecordRepositoryName, TimeTableRecordRepositoryName, VocationRepositoryName } from "../../interfaces/repository/interfacesnames";
+import { AdminRepositoryName, ApplicationRepositoryName, MechanicRepositoryName, SheduleRecordRepositoryName, TimeTableRecordRepositoryName, VocationRepositoryName } from "@asinterfaces/repository/interfacesnames";
 import { RealizationBase } from "../realizationbase";
-import { IVocation } from "@blinterfaces/realization/IVocation.interface";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
+import { IVocation } from "@asinterfaces/realization/IVocation.interface";
+import { UserRoles } from "@astypes/userinfo/userinfo";
 
 @injectable()
 export class Vocation extends RealizationBase implements IVocation
@@ -130,7 +130,7 @@ export class Vocation extends RealizationBase implements IVocation
         {
             await this._validate_existing_user(info.who, this._mechanicRepository.search);
 
-            if (!info.id || info.id !== initiator.id)
+            if (!info.who || !info.who.isEqual(initiator.id))
                 throw Error(errorDataAccess.impossibleAccess);
         }
 

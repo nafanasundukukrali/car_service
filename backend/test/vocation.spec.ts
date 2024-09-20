@@ -3,12 +3,12 @@ import { container } from "tsyringe";
 import { expect, assert } from 'chai';
 import 'mocha';
 import * as errors from '@blerrors/user/usererrors';
-import { Id } from "@bltypes/id/id";
-import { MechanicInfo } from "@bltypes/mechanicinfo/mechanicinfo";
+import { Id } from "@astypes/id/id";
+import { MechanicInfo } from "@astypes/mechanicinfo/mechanicinfo";
 import { Mechanic } from "@blrealization/mechanic/mechanic";
-import { IMechanicRepository } from "@blinterfaces/repository/IMechanicRepository.interface";
+import { IMechanicRepository } from "@asinterfaces/repository/IMechanicRepository.interface";
 import { BLTestAdminCreateCorrectWork, BLTestAdminCreateUserExist } from './bltest/bltestadmin';
-import { AdminRepositoryName, ApplicationRepositoryName, ClientRepositoryName, MechanicRepositoryName, SheduleRecordRepositoryName, TimeTableRecordRepositoryName, VocationRepositoryName } from "@//bl/interfaces/repository/interfacesnames";
+import { AdminRepositoryName, ApplicationRepositoryName, ClientRepositoryName, MechanicRepositoryName, SheduleRecordRepositoryName, TimeTableRecordRepositoryName, VocationRepositoryName } from "@asinterfaces/repository/interfacesnames";
 import { BLTestMechanicCreateCorrectWork, BLTestMechanicCreateUserExists, BLTestMechanicVocationTest } from './bltest/bltestmechanic';
 import { BLTestSheduleRecordCreateCorrectWork, BLTestSheduleRecordCreateUserExists, BLTestSheduleRecordVocationInfoForMechanic } from './bltest/bltestshedular';
 import { BLTestTimeTableRecordCreateCorrectWork, BLTestTimeTableRecordVocationReturnTImeRecords } from "./bltest/bltimetablerecord";
@@ -16,8 +16,8 @@ import { BLTestApplicationNormal, BLTestApplicationVocationAllToDirty, BLTestApp
 import { Vocation } from "@blrealization/vocation/vocation";
 import { BLTestNightVocationUpdateTest, BLTestVocationCreateCorrectWork, BLTestVocationCreateUserExists, BLTestVocationSearchPeriods } from "./bltest/bltestvocation";
 import { errorVocationDrop, errorVocationExisting, errorVocationPlane } from '@blerrors/vocation/vocationerror';
-import { UserRoles } from "@bltypes/userinfo/userinfo";
-import { PositiveInteger } from "@bltypes/positiveinteger";
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { PositiveInteger } from "@astypes/positiveinteger";
 import { BLTestClientCreateErrorUserExist } from "./bltest/bltestclient";
 
 describe('plane vocation', () => {

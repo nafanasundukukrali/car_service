@@ -2,15 +2,11 @@ import { expect, assert } from 'chai';
 import 'mocha';
 import { container } from 'tsyringe';
 import { DAInjectionReg } from '@da/dainjection';
-import { CarInfo } from '@bltypes/carinfo/carinfo';
-import { CarRepositoryName, ClientRepositoryName } from '@blinterfaces/repository/interfacesnames';
-import { ICarRepository } from '@blinterfaces/repository/ICarRepository.interface';
-import { IClientRepository } from '@blinterfaces/repository/IClientRepository.interface';
-import { UserRoles } from '@bltypes/userinfo/userinfo';
-
-import { prisma } from '@da/prismaclient';
-import { MechanicInfo } from '@//bl/types/mechanicinfo/mechanicinfo';
-import { NotRequireID } from '../src/bl/types/helperpath/helpertypes';
+import { CarInfo } from '@astypes/carinfo/carinfo';
+import { CarRepositoryName, ClientRepositoryName } from '@asinterfaces/repository/interfacesnames';
+import { ICarRepository } from '@asinterfaces/repository/ICarRepository.interface';
+import { IClientRepository } from '@asinterfaces/repository/IClientRepository.interface';
+import { UserRoles } from '@astypes/userinfo/userinfo';
 
 new DAInjectionReg();
 const car: ICarRepository = container.resolve(CarRepositoryName);

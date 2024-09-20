@@ -1,9 +1,9 @@
-import { IVocationRepository } from "@blinterfaces/repository/IVocationRepository.interface";
+import { IVocationRepository } from "@asinterfaces/repository/IVocationRepository.interface";
 import { injectable } from "tsyringe";
 import { prisma } from "../../prismaclient";
-import { NotRequireID } from "@bltypes/helperpath/helpertypes";
-import { VocationInfo } from "@bltypes/vocationinfo/vocationinfo";
-import { Id } from "@bltypes/id/id";
+import { NotRequireID } from "@astypes/helperpath/helpertypes";
+import { VocationInfo } from "@astypes/vocationinfo/vocationinfo";
+import { Id } from "@astypes/id/id";
 
 @injectable()
 export class PsqlVocationRepository implements IVocationRepository

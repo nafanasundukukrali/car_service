@@ -1,28 +1,28 @@
 import { container, injectable } from "tsyringe";
-import { SheduleRecordInfo } from "@bltypes/shedulerecordinfo/shedulerecordinfo";
-import { ISheduleRecordRepository } from "@blinterfaces/repository/ISheduleRecordRepository.interface";
-import { IBoxRepository } from "@blinterfaces/repository/IBoxRepository,interface";
-import { AdminInfo } from "@bltypes/admininfo/admininfo";
-import { IMechanicRepository } from "@blinterfaces/repository/IMechanicRepository.interface";
-import { MechanicInfo } from "@bltypes/mechanicinfo/mechanicinfo";
-import { IAdminRepository } from "@blinterfaces/repository/IAdminRepository.interface";
+import { SheduleRecordInfo } from "@astypes/shedulerecordinfo/shedulerecordinfo";
+import { ISheduleRecordRepository } from "@asinterfaces/repository/ISheduleRecordRepository.interface";
+import { IBoxRepository } from "@asinterfaces/repository/IBoxRepository,interface";
+import { AdminInfo } from "@astypes/admininfo/admininfo";
+import { IMechanicRepository } from "@asinterfaces/repository/IMechanicRepository.interface";
+import { MechanicInfo } from "@astypes/mechanicinfo/mechanicinfo";
+import { IAdminRepository } from "@asinterfaces/repository/IAdminRepository.interface";
 import { errorSheduleExisting, errorSheduleRecordDelete } from "@blerrors/shedulerecord/shedulerecorderrors";
 import { errorDataAccess } from "@blerrors/user/usererrors";
 import { errorBoxExisting } from "@blerrors/box/boxerrors.";
 import { errorDirtyShedular } from "@blerrors/serviceerrors/serviceerrors";
-import { ITimeTableRecordRepository } from "@//bl/interfaces/repository/ITimeTableRecordRepository.interface";
-import { NotRequireID } from "@bltypes/helperpath/helpertypes";
-import { IApplicationRepository } from "@blinterfaces/repository/IApplicationRepository.interface";
-import { isClosed, isDirty, setDirtyStatus } from "../applicationstatus/applicationstatus";
-import { ApplicationInfo } from "@bltypes/applicationinfo/applicationinfo";
-import { Id } from "@bltypes/id/id";
-import { BoxInfo } from "@bltypes/boxinfo/boxinfo";
+import { ITimeTableRecordRepository } from "@asinterfaces/repository/ITimeTableRecordRepository.interface";
+import { NotRequireID } from "@astypes/helperpath/helpertypes";
+import { IApplicationRepository } from "@asinterfaces/repository/IApplicationRepository.interface";
+import { isClosed, isDirty, setDirtyStatus } from "@astypes/applicationstatus/applicationstatus";
+import { ApplicationInfo } from "@astypes/applicationinfo/applicationinfo";
+import { Id } from "@astypes/id/id";
+import { BoxInfo } from "@astypes/boxinfo/boxinfo";
 import { errorShedularRecordTimeValidation } from '@blerrors/shedulerecord/shedulerecorderrors';
-import { AdminRepositoryName, ApplicationRepositoryName, BoxRepositoryName, MechanicRepositoryName, SheduleRecordRepositoryName, TimeTableRecordRepositoryName } from '../../interfaces/repository/interfacesnames';
+import { AdminRepositoryName, ApplicationRepositoryName, BoxRepositoryName, MechanicRepositoryName, SheduleRecordRepositoryName, TimeTableRecordRepositoryName } from '@asinterfaces/repository/interfacesnames';
 import { RealizationBase } from "../realizationbase";
-import { ISheduleRecord } from "@blinterfaces/realization/ISheduleRecord.interface";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
-import { PositiveInteger } from "@bltypes/positiveinteger"
+import { ISheduleRecord } from "@asinterfaces/realization/ISheduleRecord.interface";
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { PositiveInteger } from "@astypes/positiveinteger"
 import { setAchivedStatus } from "../changeachivedstatus/changeachivedstatus";
 
 @injectable()

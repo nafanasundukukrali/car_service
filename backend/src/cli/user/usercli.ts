@@ -1,19 +1,19 @@
 import "reflect-metadata";
-import { IClient } from '@blinterfaces/realization/IClient.interface';
+import { IClient } from '@asinterfaces/realization/IClient.interface';
 import Input from '../input/input';
-import { IAdmin } from '@blinterfaces/realization/IAdmin.interface';
-import { IMechanic } from '@blinterfaces/realization/IMechanic.interface';
-import Auth from '@blrealization/auth/auth';
-import { UserRoles } from '@bltypes/userinfo/userinfo';
-import { Id } from '@bltypes/id/id';
+import { IAdmin } from '@asinterfaces/realization/IAdmin.interface';
+import { IMechanic } from '@asinterfaces/realization/IMechanic.interface';
+import Auth from '../auth/auth';
+import { UserRoles } from '@astypes/userinfo/userinfo';
+import { Id } from '@astypes/id/id';
 import { container } from "tsyringe";
-import { AdminName, ClientName, MechanicName } from "@//bl/interfaces/realization/interfacesnames";
-import { AdminInfo } from '@//bl/types/admininfo/admininfo';
+import { AdminName, ClientName, MechanicName } from "@asinterfaces/realization/interfacesnames";
+import { AdminInfo } from '@astypes/admininfo/admininfo';
 import ILanguageModel from "../languagemodel/ILanguageModel.inteface";
 import { LanguageModel } from "../depencecli";
-import { ClientInfo } from "@//bl/types/clientinfo/clientinfo";
-import { NotRequireID } from '../../bl/types/helperpath/helpertypes';
-import { MechanicInfo } from "@//bl/types/mechanicinfo/mechanicinfo";
+import { ClientInfo } from "@astypes/clientinfo/clientinfo";
+import { NotRequireID } from '@astypes/helperpath/helpertypes';
+import { MechanicInfo } from "@astypes/mechanicinfo/mechanicinfo";
 
 export default class UserCLI {
     private _input: Input;
@@ -45,10 +45,10 @@ export default class UserCLI {
             return (await this._mechanic.search({id: initiator.id, type: initiator.type}, initiator))[0];       
     }
 
-    async client_update_info(initiator: ClientInfo | AdminInfo, chanclient ?: ClientInfo) {
+    async client_update_info(initiator: ClientInfo | AdminInfo, chanclient ?: ClientInfo, required = true) {
         while (true)
         {
-            let user: ClientInfo = {...await this._registration_data(), id: initiator.id};
+            let user: ClientInfo = {...await this._registration_data(required), id: chanclient.id};
             
             if (user.password)
                 await this._auth.hashPassword(user);

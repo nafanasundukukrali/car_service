@@ -1,10 +1,10 @@
 import { container, injectable } from "tsyringe";
-import { NotRequireID } from "@bltypes/helperpath/helpertypes";
-import { ServiceInfo } from "@//bl/types/serviceinfo/serviceinfo";
+import { NotRequireID } from "@astypes/helperpath/helpertypes";
+import { ServiceInfo } from "@astypes/serviceinfo/serviceinfo";
 import { prisma } from "../../prismaclient";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
-import { Id } from "@bltypes/id/id";
-import { IServiceRepository } from "@blinterfaces/repository/IServiceRepository.interface";
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { Id } from "@astypes/id/id";
+import { IServiceRepository } from "@asinterfaces/repository/IServiceRepository.interface";
 
 @injectable()
 export class PsqlServiceRepository implements IServiceRepository

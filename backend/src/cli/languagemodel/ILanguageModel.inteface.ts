@@ -2,6 +2,7 @@ export default interface ILanguageModel
 {
     askLogin: string,
     askPassword: string,
+    commentMechanic: string;
     infoIncorrectData: string,
     outEnterQuestion: string,
     askEmail: string,
@@ -16,6 +17,13 @@ export default interface ILanguageModel
     questionMonth: string
     questionDay: string,
     serviceName: string,
+    errorGetScheduleInfo: string,
+    errorGetMechanicInfo: string,
+    errorGetCarInfo: string;
+    errorGetApplications: string;
+    errorCreateApplication: string;
+    updateApplicationAdminMenu: string;
+    updateApplicationAdminMechanic: string;
     serviceDiscription: string,
     servicePrice: string,
     carListEmpty: string
@@ -54,12 +62,75 @@ export default interface ILanguageModel
     status: string;
     date: string;
     createdStatus: string;
-    saved: string;
+    savedClient: string;
     dirty: string;
     closed: string;
     noApplicationRecord: string;
     inputDateBirth: string;
     inputServiceNumber: string;
     outCreateApplication: string;
+    outUpdateApplication: string,
+    askChangeStatus: string;
     warningIgnore: string;
+    adminClientMenu: string;
+    adminMechanicMenu: string;
+    incorrectInput: string;
+    userColumnEmail: string;
+    userColumnName: string;
+    userColumnPhone: string;
+    userColumnAskAction: string;
+    clientLastInTable: string;
+    mehcanicLastInTable: string;
+    userGetInfoZero: string
+    userGetInfoMoreTahnOne: string;
+    seachEmailClient: string;
+    errorIncorrectEmail: string;
+    errorIncorrectPhone: string;
+    userCarList: string;
+    clientMenuForAdmin: string;
+    mechanicMenuForAdmin: string;
+    carExit: string;
+    no: string;
+    askMechanicStatus: string;
+    askCarNickEmpty: string;
+    userStatusField: string;
+    userStatusStored: string;
+    userStatusArchived: string;
+    userStatusVocation: string;
+    userInVocationImpossibleChange: string;
+    inputStartDatePeriod: string;
+    inputEndDatePeriod: string;
+    errorStartEnd: string;
+    service: string;
+    errorApplicationIncorrect: string;
+    askIfUserNeedDataInfo: string;
+    applicationsMenuForAdmin: string;
+    applicationMenuForAdmin: string;
+    askInputApplicationNumber: string;
+    duration: string;
+    noDateInfo: string;
+    errorGetClientName: string;
+    box: string;
+    errorGetServiceName: string;
+    errorGetMechanicAndSheduleInfo: string;
+    statusMenu: string;
+    errorImpossibleChangeApplicationStatus: string;
+    errorImpossibleUpdateApplication: string;
+    wouldUpdateMechanic: string;
+    errorImpossibleUpdateMechanic: string;
+    dayWeek: string;
+    timeStart: string;
+    timeEnd: string;
+    archived: string;
+    savedMechanicSchedule: string;
+    askInputComment: string;
+    dateStart: string;
+    dateEnd : string;
+    vocationMenuForAdmin: string;
+    errorImpossibleCreateSameVocationPeriod: string;
+    vocationDeleteAsk: string;
+    errorDeleteVocation: string;
+    mechanicApplicationMenu: string;
+    impossibleUpdateComment: string;
+    impossibleWorkWithApplication: string;
 }

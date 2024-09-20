@@ -1,0 +1,17 @@
+{
+  "extends" : "./tsconfig.base.json",
+  "exclude": [
+    "src/da",
+    "src/bl",
+    "src/index.ts",
+    "src/registerdependency.ts"
+  ],
+  "compilerOptions": {
+    "noEmit": false,
+    "paths": {
+      "@logger/*" : ["src/utils/logger/*"],
+      "@asinterfaces/*": ["src/interfaces/*"],
+      "@astypes/*" : ["src/types/*"]
+    }
+  }
+}

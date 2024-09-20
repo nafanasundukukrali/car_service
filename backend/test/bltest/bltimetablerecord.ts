@@ -1,9 +1,9 @@
 import { injectable } from "tsyringe";
-import { NotRequireID } from '@bltypes/helperpath/helpertypes';
-import { Id } from '@bltypes/id/id';
-import { TimeTableRecordInfo, TimeTableRecordList } from '@//bl/types/timetablerecordinfo/timetablerecordinfo';
-import { ITimeTableRecordRepository } from '@//bl/interfaces/repository/ITimeTableRecordRepository.interface';
-import { ServiceInfo } from '../../src/bl/types/serviceinfo/serviceinfo';
+import { NotRequireID } from '@astypes/helperpath/helpertypes';
+import { Id } from '@astypes/id/id';
+import { TimeTableRecordInfo, TimeTableRecordList } from '@astypes/timetablerecordinfo/timetablerecordinfo';
+import { ITimeTableRecordRepository } from '@asinterfaces/repository/ITimeTableRecordRepository.interface';
+import { ServiceInfo } from '@astypes/serviceinfo/serviceinfo';
 
 @injectable()
 export class BLTestTimeTableRecordCreateCorrectWork implements ITimeTableRecordRepository {

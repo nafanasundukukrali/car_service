@@ -1,0 +1,136 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_WITH_SCHEMA")
+}
+
+model admin {
+  id       String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email    String @unique
+  fio      String
+  password String
+}
+
+model applicationstatus {
+  id          Int           @id @default(0)
+  status      String        @unique
+  application application[]
+}
+
+model box {
+  id                       String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  number                   Int       @unique
+  shedule_shedule_boxTobox shedule[] @relation("shedule_boxTobox")
+}
+
+model canbeserved {
+  id                                      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  hours                                   Int
+  mechanic                                String   @db.Uuid
+  service                                 String   @db.Uuid
+  mechanic_canbeserved_mechanicTomechanic mechanic @relation("canbeserved_mechanicTomechanic", fields: [mechanic], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  service_canbeserved_serviceToservice    service  @relation("canbeserved_serviceToservice", fields: [service], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model mechanic {
+  id                                         String          @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email                                      String          @unique
+  fio                                        String
+  status                                     Int?            @default(0)
+  password                                   String
+  canbeserved_canbeserved_mechanicTomechanic canbeserved[]   @relation("canbeserved_mechanicTomechanic")
+  mechanicstatus                             mechanicstatus? @relation(fields: [status], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  shedule_shedule_mechanicTomechanic         shedule[]       @relation("shedule_mechanicTomechanic")
+  vocation_vocation_mechanicTomechanic       vocation[]      @relation("vocation_mechanicTomechanic")
+}
+
+model mechanicstatus {
+  id       Int        @id @default(0)
+  status   String     @unique
+  mechanic mechanic[]
+}
+
+model service {
+  id                                       String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  discription                              String
+  name                                     String        @unique
+  price                                    Decimal?      @db.Decimal(10, 2)
+  application_application_serviceToservice application[] @relation("application_serviceToservice")
+  canbeserved_canbeserved_serviceToservice canbeserved[] @relation("canbeserved_serviceToservice")
+}
+
+model shedule {
+  id                                   String         @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  starttime                            DateTime       @db.Time(6)
+  endtime                              DateTime       @db.Time(6)
+  mechanic                             String         @db.Uuid
+  box                                  String         @db.Uuid
+  dayweek                              Int
+  status                               Int?           @default(0)
+  box_shedule_boxTobox                 box            @relation("shedule_boxTobox", fields: [box], references: [id], onDelete: Cascade, onUpdate: NoAction)
+  mechanic_shedule_mechanicTomechanic  mechanic       @relation("shedule_mechanicTomechanic", fields: [mechanic], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  shedulestatus                        shedulestatus? @relation(fields: [status], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  timetable_timetable_sheduleToshedule timetable[]    @relation("timetable_sheduleToshedule")
+}
+
+model timetable {
+  id                                 String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  datetime                           DateTime      @db.Timestamp(6)
+  shedule                            String        @db.Uuid
+  application                        application[]
+  shedule_timetable_sheduleToshedule shedule       @relation("timetable_sheduleToshedule", fields: [shedule], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model application {
+  id                                   String            @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  timerecord                           String?           @db.Uuid
+  comment                              String?
+  service                              String            @db.Uuid
+  status                               Int               @default(0)
+  car                                  String
+  car_application_carTocar             car               @relation("application_carTocar", fields: [car], references: [vin], onDelete: Cascade, onUpdate: NoAction)
+  service_application_serviceToservice service           @relation("application_serviceToservice", fields: [service], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  applicationstatus                    applicationstatus @relation(fields: [status], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  timetable                            timetable?        @relation(fields: [timerecord], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+model car {
+  vin                              String        @id
+  nick                             String?
+  year                             Int
+  mark                             String
+  color                            String
+  run                              Int
+  owner_                           String        @db.Uuid
+  application_application_carTocar application[] @relation("application_carTocar")
+  client                           client        @relation(fields: [owner_], references: [id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model client {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  email     String   @unique
+  fio       String
+  datebirth DateTime @db.Timestamp(6)
+  phone     String   @unique
+  password  String
+  car       car[]
+}
+
+/// This table contains check constraints and requires additional setup for migrations. Visit https://pris.ly/d/check-constraints for more info.
+model vocation {
+  id                                   String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  start_date                           DateTime @db.Timestamp(6)
+  end_date                             DateTime @db.Timestamp(6)
+  mechanic                             String   @db.Uuid
+  mechanic_vocation_mechanicTomechanic mechanic @relation("vocation_mechanicTomechanic", fields: [mechanic], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model shedulestatus {
+  id      Int       @id @default(0)
+  status  String    @unique
+  shedule shedule[]
+}

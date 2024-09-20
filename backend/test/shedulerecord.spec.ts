@@ -1,6 +1,6 @@
 import "reflect-metadata";
 import { container } from "tsyringe";
-import { AdminRepositoryName, ApplicationRepositoryName, BoxRepositoryName, MechanicRepositoryName, SheduleRecordRepositoryName, TimeTableRecordRepositoryName } from '@blinterfaces/repository/interfacesnames';
+import { AdminRepositoryName, ApplicationRepositoryName, BoxRepositoryName, MechanicRepositoryName, SheduleRecordRepositoryName, TimeTableRecordRepositoryName } from '@asinterfaces/repository/interfacesnames';
 import { BLTestBoxCorrect, BLTestBoxEmpty } from './bltest/bltestbox';
 import { SheduleRecord } from '@blrealization/shedulerecord/shedulerecord';
 import { BLTestAdminCreateCorrectWork, BLTestAdminCreateUserExist, BLTestAdminNoUser } from './bltest/bltestadmin';
@@ -10,12 +10,12 @@ import { BLTestTimeTableRecordCreateCorrectWork, BLTestTimeTableRecordCreateUser
 import { BLTestApplicationNormal, BLTestApplicationSheduleTest } from './bltest/bltestapplication';
 import { expect } from 'chai';
 import { errorShedularRecordTimeValidation } from '../src/bl/errors/shedulerecord/shedulerecorderrors';
-import { UserRoles } from "@bltypes/userinfo/userinfo";
-import { Id } from "@bltypes/id/id";
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { Id } from "@astypes/id/id";
 import { errorBoxExisting } from "@blerrors/box/boxerrors.";
 import { errorDataAccess, errorUserInDb } from "@blerrors/user/usererrors";
-import { SheduleRecordInfo } from "@bltypes/shedulerecordinfo/shedulerecordinfo";
-import { ISheduleRecordRepository } from "@//bl/interfaces/repository/ISheduleRecordRepository.interface";
+import { SheduleRecordInfo } from "@astypes/shedulerecordinfo/shedulerecordinfo";
+import { ISheduleRecordRepository } from "@asinterfaces/repository/ISheduleRecordRepository.interface";
 import { errorDirtyShedular } from "@//bl/errors/serviceerrors/serviceerrors";
 
 describe('create', () => {

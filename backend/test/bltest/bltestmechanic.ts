@@ -1,11 +1,11 @@
-import { IMechanicRepository } from '@//bl/interfaces/repository/IMechanicRepository.interface';
+import { IMechanicRepository } from '@asinterfaces/repository/IMechanicRepository.interface';
 import { injectable } from "tsyringe";
-import { NotRequireID } from '@bltypes/helperpath/helpertypes';
-import { Id } from '@bltypes/id/id';
-import { MechanicInfo } from '@bltypes/mechanicinfo/mechanicinfo';
-import { UserRoles } from '@bltypes/userinfo/userinfo';
-import { MechanicStatusType } from '@bltypes/mechanicstatus/mechanicstatus';
-import { BaseStatus } from '@bltypes/basestatus/basestatus';
+import { NotRequireID } from '@astypes/helperpath/helpertypes';
+import { Id } from '@astypes/id/id';
+import { MechanicInfo } from '@astypes/mechanicinfo/mechanicinfo';
+import { UserRoles } from '@astypes/userinfo/userinfo';
+import { MechanicStatusType } from '@astypes/mechanicstatus/mechanicstatus';
+import { BaseStatus } from '@astypes/basestatus/basestatus';
 import { assert, expect } from 'chai';
 
 @injectable()

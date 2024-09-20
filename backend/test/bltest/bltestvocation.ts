@@ -1,10 +1,10 @@
 import { injectable } from "tsyringe";
-import { NotRequireID } from '@bltypes/helperpath/helpertypes';
-import { Id } from '@bltypes/id/id';
-import { VocationInfo } from "@bltypes/vocationinfo/vocationinfo";
-import { IVocationRepository } from "@blinterfaces/repository/IVocationRepository.interface";
+import { NotRequireID } from '@astypes/helperpath/helpertypes';
+import { Id } from '@astypes/id/id';
+import { VocationInfo } from "@astypes/vocationinfo/vocationinfo";
+import { IVocationRepository } from "@asinterfaces/repository/IVocationRepository.interface";
 import { assert, expect } from "chai";
-import { UserRoles } from "@//bl/types/userinfo/userinfo";
+import { UserRoles } from "@astypes/userinfo/userinfo";
 
 @injectable()
 export class BLTestVocationCreateCorrectWork implements IVocationRepository {

@@ -1,19 +1,19 @@
 import { container, injectable } from "tsyringe";
-import { CarInfo } from "@bltypes/carinfo/carinfo";
-import { AdminInfo } from "@bltypes/admininfo/admininfo";
-import { ClientInfo } from "@bltypes/clientinfo/clientinfo";
+import { CarInfo } from "@astypes/carinfo/carinfo";
+import { AdminInfo } from "@astypes/admininfo/admininfo";
+import { ClientInfo } from "@astypes/clientinfo/clientinfo";
 import { errorDataAccess, errorUserInDb } from '@blerrors/user/usererrors';
-import { ICarRepository } from "@blinterfaces/repository/ICarRepository.interface";
+import { ICarRepository } from "@asinterfaces/repository/ICarRepository.interface";
 import { validateVIN } from "universal-vin-decoder";
 import { errorCarInDB, errorNoVin } from "@blerrors/car/carerrors";
-import { IClientRepository } from "@blinterfaces/repository/IClientRepository.interface";
-import { IApplicationRepository } from "@blinterfaces/repository/IApplicationRepository.interface";
-import { IAdminRepository } from "@blinterfaces/repository/IAdminRepository.interface";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
+import { IClientRepository } from "@asinterfaces/repository/IClientRepository.interface";
+import { IApplicationRepository } from "@asinterfaces/repository/IApplicationRepository.interface";
+import { IAdminRepository } from "@asinterfaces/repository/IAdminRepository.interface";
+import { UserRoles } from "@astypes/userinfo/userinfo";
 import { RealizationBase } from "../realizationbase";
-import { ICar } from "@blinterfaces/realization/ICar.interface";
-import { AdminRepositoryName, ApplicationRepositoryName, CarRepositoryName, ClientRepositoryName } from '@blinterfaces/repository/interfacesnames';
-import { PositiveInteger } from "@bltypes/positiveinteger"
+import { ICar } from "@asinterfaces/realization/ICar.interface";
+import { AdminRepositoryName, ApplicationRepositoryName, CarRepositoryName, ClientRepositoryName } from '@asinterfaces/repository/interfacesnames';
+import { PositiveInteger } from "@astypes/positiveinteger"
 
 @injectable()
 export class Car extends RealizationBase implements ICar

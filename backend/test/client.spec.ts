@@ -9,19 +9,19 @@ import {  BLTestClientCreateCorrectWork,
           BLTestClientListCorrectWork, 
         } from './bltest/bltestclient';
 import { Client } from '@blrealization/client/client';
-import { ClientInfo } from "@bltypes/clientinfo/clientinfo";
+import { ClientInfo } from "@astypes/clientinfo/clientinfo";
 import { expect, assert } from 'chai';
 import 'mocha';
 import * as errors from '@blerrors/user/usererrors';
-import { Id } from "@bltypes/id/id";
+import { Id } from "@astypes/id/id";
 
-import { AdminRepositoryName, ClientRepositoryName, MechanicRepositoryName } from "@//bl/interfaces/repository/interfacesnames";
+import { AdminRepositoryName, ClientRepositoryName, MechanicRepositoryName } from "@asinterfaces/repository/interfacesnames";
 import { BLTestMechanicCreateCorrectWork, BLTestMechanicCreateUserExists, BLTestMechanicListNotUndefValidCorrectWork } from "./bltest/bltestmechanic";
 import { BLTestAdminCreateCorrectWork, BLTestAdminCreateUserExist } from "./bltest/bltestadmin";
 import { BLTestClientErrorCreateRealization } from './bltest/bltestclient';
 import { BLTestClientUpdateCorrectWork } from "./bltest/bltestclient";
 import { BLTestClientSearchCorrectWork } from "./bltest/bltestclient";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
+import { UserRoles } from "@astypes/userinfo/userinfo";
 
 
 describe('create client', () => {

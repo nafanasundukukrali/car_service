@@ -1,11 +1,11 @@
-import { IApplicationRepository } from "@//bl/interfaces/repository/IApplicationRepository.interface";
+import { IApplicationRepository } from "@asinterfaces/repository/IApplicationRepository.interface";
 import { injectable } from "tsyringe";
-import { ApplicationInfo } from '@bltypes/applicationinfo/applicationinfo';
-import { NotRequireID } from "@//bl/types/helperpath/helpertypes";
-import { BaseStatus } from "@//bl/types/basestatus/basestatus";
-import { Id } from "@//bl/types/id/id";
+import { ApplicationInfo } from '@astypes/applicationinfo/applicationinfo';
+import { NotRequireID } from "@astypes/helperpath/helpertypes";
+import { BaseStatus } from "@astypes/basestatus/basestatus";
+import { Id } from "@astypes/id/id";
 import { assert, expect } from "chai";
-import { ApplicationStatusType } from "@//bl/types/applicationstatus/applicationstatus";
+import { ApplicationStatusType } from "@astypes/applicationstatus/applicationstatus";
 
 @injectable()
 export class BLTestApplicationNormal implements IApplicationRepository {

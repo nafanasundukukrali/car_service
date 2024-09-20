@@ -1,10 +1,10 @@
-import { IClientRepository } from "@blinterfaces/repository/IClientRepository.interface";
+import { IClientRepository } from "@asinterfaces/repository/IClientRepository.interface";
 import { container, injectable } from "tsyringe";
-import { NotRequireID } from "@bltypes/helperpath/helpertypes";
-import { ClientInfo } from "@bltypes/clientinfo/clientinfo";
+import { NotRequireID } from "@astypes/helperpath/helpertypes";
+import { ClientInfo } from "@astypes/clientinfo/clientinfo";
 import { prisma } from "../../prismaclient";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
-import { Id } from "@bltypes/id/id";
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { Id } from "@astypes/id/id";
 
 @injectable()
 export class PsqlClientRepository implements IClientRepository

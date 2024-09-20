@@ -6,15 +6,15 @@ import {  BLTestCarCreateCorrectWork,
           BLTestCarCreateErrorInRepository, 
           BLTestCarErrorNotCreate} from './bltest/bltestcar';
 import { Car } from "@//bl/realization/car/car";
-import { ClientInfo } from "@//bl/types/clientinfo/clientinfo";
+import { ClientInfo } from "@astypes/clientinfo/clientinfo";
 import { expect } from "chai";
 import { errorCarInDB, errorNoVin } from "@//bl/errors/car/carerrors";
 import { BLTestClientCreateCorrectWork, BLTestClientUpdateCorrectWork } from "./bltest/bltestclient";
 import { errorDataAccess, errorUserInDb } from "@//bl/errors/user/usererrors";
 import { BLTestApplicationNormal } from "./bltest/bltestapplication";
-import { UserRoles } from '@bltypes/userinfo/userinfo';
-import { Id } from '@bltypes/id/id';
-import { AdminRepositoryName, ApplicationRepositoryName, CarRepositoryName, ClientRepositoryName } from "@//bl/interfaces/repository/interfacesnames";
+import { UserRoles } from '@astypes/userinfo/userinfo';
+import { Id } from '@astypes/id/id';
+import { AdminRepositoryName, ApplicationRepositoryName, CarRepositoryName, ClientRepositoryName } from "@asinterfaces/repository/interfacesnames";
 import { BLTestAdminCreateUserExist } from "./bltest/bltestadmin";
 
 describe('create car', () => {

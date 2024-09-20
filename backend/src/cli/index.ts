@@ -1,18 +1,6 @@
 import "reflect-metadata";
-import RegisterDependency from '../registerdependency';
 import { container } from 'tsyringe';
-import { Mechanic } from '@blrealization/mechanic/mechanic';
-import { Client } from '@blrealization/client/client';
-import { SheduleRecord } from '@blrealization/shedulerecord/shedulerecord';
-import { Application } from '@blrealization/application/application';
-import { Admin } from '@blrealization/admin/admin';
-import { TimeTableRecord } from '@blrealization/timetablerecord/timetablerecord';
-import { Vocation } from '@blrealization/vocation/vocation';
-import { Box } from '@blrealization/box/box';
-import { Car } from '@blrealization/car/car';
-import { Service } from '@blrealization/service/service';
-import { AdminName, ApplicationName, BoxName, CarName, ClientName, MechanicName, ServiceName, SheduleRecordName, TimeTableRecordName, VocationName } from '../bl/interfaces/realization/interfacesnames';
-import { UserInfo, UserRoles } from '../bl/types/userinfo/userinfo';
+import { UserInfo, UserRoles } from '@astypes/userinfo/userinfo';
 import AuthCLI from './auth/authcli';
 import { InfoMessagesCLI, Menues } from "./types";
 import Input from "./input/input";
@@ -24,9 +12,12 @@ import CarCLI from "./car/carcli";
 import ILanguageModel from "./languagemodel/ILanguageModel.inteface";
 import ApplicationCLI from "./application/applicationcli";
 import UserCLI from "./user/usercli";
+import AdminCLI from "./admin/admincli";
+import Logger from "@logger/logger";
+import MechanicCLI from "./mechanic/mechanicli";
 
 
-class CLI {
+export default class CLI {
     private _token: any;
     private _application: ApplicationCLI;
     private _userCLI: UserCLI;
@@ -37,9 +28,12 @@ class CLI {
     private _services: ServiceCLI;
     private _cars: CarCLI;
     private _lm: ILanguageModel;
+    private _mechanicCLI: MechanicCLI;
 
     private _printSelfInfo()
     {
+        Logger.info("print self info of user");
+
         console.log(this._lm.userFIO + this._user.fio);
         console.log(this._lm.userEmail + this._user.email);
 
@@ -61,7 +55,10 @@ class CLI {
         console.log(this._lm.userRolePassword + this._lm.userPasswordCapcha);
     }
 
-    private async _selectAdmin(): Promise<number> {
+    private async _selectAdmin(): Promise<number> 
+    {
+        Logger.info("Print admin menu");
+
         while (true)
         {
             if (!await this._check_token())
@@ -73,19 +70,19 @@ class CLI {
                 return 0;   
             else if (code == '1')
             {
-                await this._services.printPriceList();
+                await this._admin.work_with_clients(this._user);
                 return 1;
             }
             else if (code == '2')
             {
-                await this._cars.printCarList(this._user)
+                await this._admin.work_with_mechanics(this._user)
                 return 1
             }
-            else if (code == '3')
-            {
-                await this._cars.updateCarList(this._user)
-                return 1
-            }
+            // else if (code == '3')
+            // {
+            //     await this._cars.updateCarList(this._user)
+            //     return 1
+            // }
             else if (code == '4')
             {
                 await this._application.print_client_applications(this._user)
@@ -113,13 +110,41 @@ class CLI {
     }
 
     private async _selectMechanic(): Promise<number> {
-        console.log(this._user);
-        console.log(this._token);
-        return 0;
+        Logger.info("Print mechanic menu");
+
+        while (true)
+            {
+                if (!await this._check_token())
+                    return;
+    
+                let code = await this._input.askQuestion(Menues.mechanicMenu);
+    
+                if (code === '0')
+                    return 0;   
+                else if (code == '1')
+                {
+                    await this._mechanicCLI.print_mechanic_vocation_schedule(this._user, this._user);
+                    return 1;
+                }
+                else if (code == '2')
+                {
+                    await this._mechanicCLI.work_with_self_applications(this._user);
+                    return 1
+                }
+                else if (code == '3')
+                {
+                    this._printSelfInfo()
+                    return 1
+                }
+                else
+                    console.log(InfoMessagesCLI.incorrectInput);
+            }
     }
 
     private async _check_token()
     {
+        Logger.info("Check jwt token time");
+
         if (!await this._auth.checkToken(this._token))
         {
             console.log(this._lm.tokenExpired);
@@ -131,7 +156,10 @@ class CLI {
         return true;
     }
 
-    private async _selectClient(): Promise<number> {
+    private async _selectClient(): Promise<number> 
+    {
+        Logger.info("Print client menu");
+
         while (true)
         {
             if (!await this._check_token())
@@ -148,12 +176,12 @@ class CLI {
             }
             else if (code == '2')
             {
-                await this._cars.printCarList(this._user)
+                await this._cars.print_car_list(this._user, this._user)
                 return 1
             }
             else if (code == '3')
             {
-                await this._cars.updateCarList(this._user)
+                await this._cars.updateCarList(this._user, this._user)
                 return 1
             }
             else if (code == '4')
@@ -182,7 +210,10 @@ class CLI {
         }
     }
 
-    private async _selectGuest(): Promise<number> {
+    private async _selectGuest(): Promise<number> 
+    {
+        Logger.info("Print guest menu");
+
         while (true)
         {
             let code = await this._input.askQuestion(Menues.guestMenu);
@@ -215,19 +246,25 @@ class CLI {
     }
 
     constructor () {
-        new RegisterDependency();
+        Logger.info("Init CLI.")
+        Logger.info("Register laguage model injection.")
         container.register(LanguageModel, RuBase);
+
         this._token = undefined;
         this._input = new Input();
         this._auth = new AuthCLI();
+        this._admin = new AdminCLI();
         this._userCLI = new UserCLI();
         this._services = new ServiceCLI()
         this._cars = new CarCLI()
         this._lm = container.resolve(LanguageModel);
         this._application = new ApplicationCLI();
+        this._mechanicCLI = new MechanicCLI(this._application);
     }
 
     async run() {
+        Logger.info("Run CLI.")
+
         let endflag = false;
         while (!endflag)
         {
@@ -246,7 +283,3 @@ class CLI {
         }
     }
 }
-
-
-let cln = new CLI();
-await cln.run();

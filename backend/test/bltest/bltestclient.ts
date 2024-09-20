@@ -1,9 +1,9 @@
-import { IClientRepository } from '@//bl/interfaces/repository/IClientRepository.interface';
+import { IClientRepository } from '@asinterfaces/repository/IClientRepository.interface';
 import { injectable } from "tsyringe";
-import { ClientInfo } from '@bltypes/clientinfo/clientinfo';
-import { NotRequireID } from '@bltypes/helperpath/helpertypes';
-import { Id } from '@bltypes/id/id';
-import { UserRoles } from '@bltypes/userinfo/userinfo';
+import { ClientInfo } from '@astypes/clientinfo/clientinfo';
+import { NotRequireID } from '@astypes/helperpath/helpertypes';
+import { Id } from '@astypes/id/id';
+import { UserRoles } from '@astypes/userinfo/userinfo';
 
 @injectable()
 export class BLTestClientCreateCorrectWork implements IClientRepository {

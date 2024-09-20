@@ -1,6 +1,6 @@
-import { AchivedStatus } from '@bltypes/achivedstatus/achivedstatus';
-import { AchivedStatusType } from '@bltypes/achivedstatus/achivedstatus';
-import { BaseStatus } from '@bltypes/basestatus/basestatus';
+import { AchivedStatus } from '@astypes/achivedstatus/achivedstatus';
+import { AchivedStatusType } from '@astypes/achivedstatus/achivedstatus';
+import { BaseStatus } from '@astypes/basestatus/basestatus';
 
 export async function setAchivedStatus<T extends {status?: U | AchivedStatus}, U> (input: T): Promise<undefined> {
     input.status = AchivedStatusType.archived;

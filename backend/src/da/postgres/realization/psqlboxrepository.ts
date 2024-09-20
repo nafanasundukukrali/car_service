@@ -1,9 +1,9 @@
-import { IBoxRepository } from "@blinterfaces/repository/IBoxRepository,interface";
+import { IBoxRepository } from "@asinterfaces/repository/IBoxRepository,interface";
 import { container, injectable } from "tsyringe";
-import { BoxInfo } from "@bltypes/boxinfo/boxinfo";
+import { BoxInfo } from "@astypes/boxinfo/boxinfo";
 import { prisma } from "../../prismaclient";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
-import { Id } from "@bltypes/id/id";
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { Id } from "@astypes/id/id";
 
 @injectable()
 export class PsqlBoxRepository implements IBoxRepository

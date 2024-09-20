@@ -1,13 +1,10 @@
 import { container, injectable } from "tsyringe";
-import { NotRequireID } from "@bltypes/helperpath/helpertypes";
 import { prisma } from "../../prismaclient";
-import { Id } from "@bltypes/id/id";
-import { AchivedStatusType } from '@bltypes/achivedstatus/achivedstatus';
-import { ITimeTableRecordRepository } from "@blinterfaces/repository/ITimeTableRecordRepository.interface";
-import { TimeTableRecordInfo, TimeTableRecordList } from "@bltypes/timetablerecordinfo/timetablerecordinfo";
-import { get_application_status_id, get_status_by_id } from '../../../bl/realization/applicationstatus/applicationstatus';
-import { UserRoles } from '../../../bl/types/userinfo/userinfo';
-import { MechanicStatusType } from '../../../bl/types/mechanicstatus/mechanicstatus';
+import { Id } from "@astypes/id/id";
+import { ITimeTableRecordRepository } from "@asinterfaces/repository/ITimeTableRecordRepository.interface";
+import { TimeTableRecordInfo, TimeTableRecordList } from "@astypes/timetablerecordinfo/timetablerecordinfo";
+import { get_application_status_id, get_status_by_id } from '@astypes/applicationstatus/applicationstatus';
+import { UserRoles } from '@astypes/userinfo/userinfo';
 
 @injectable()
 export class PsqlTimeTableRecord implements ITimeTableRecordRepository

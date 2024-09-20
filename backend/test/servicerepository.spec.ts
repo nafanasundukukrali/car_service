@@ -1,11 +1,11 @@
 import { expect, assert } from 'chai';
 import 'mocha';
 import { container } from 'tsyringe';
-import { BoxRepositoryName, ServiceRepositoryName } from '@blinterfaces/repository/interfacesnames';
+import { BoxRepositoryName, ServiceRepositoryName } from '@asinterfaces/repository/interfacesnames';
 import { DAInjectionReg } from '@da/dainjection';
-import { IBoxRepository } from '@blinterfaces/repository/IBoxRepository,interface';
-import { ServiceInfo } from '@bltypes/serviceinfo/serviceinfo';
-import { IServiceRepository } from '@blinterfaces/repository/IServiceRepository.interface';
+import { IBoxRepository } from '@asinterfaces/repository/IBoxRepository,interface';
+import { ServiceInfo } from '@astypes/serviceinfo/serviceinfo';
+import { IServiceRepository } from '@asinterfaces/repository/IServiceRepository.interface';
 
 new DAInjectionReg();
 const service: IServiceRepository = container.resolve(ServiceRepositoryName);

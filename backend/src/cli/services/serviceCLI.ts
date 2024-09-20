@@ -1,8 +1,8 @@
 import 'reflect-metadata';
-import { IService } from '@blinterfaces/realization/IService.interface';
+import { IService } from '@asinterfaces/realization/IService.interface';
 import { container } from 'tsyringe';
-import { ServiceName} from '@blinterfaces/realization/interfacesnames';
-import { ServiceInfo } from '@//bl/types/serviceinfo/serviceinfo';
+import { ServiceName} from '@asinterfaces/realization/interfacesnames';
+import { ServiceInfo } from '@astypes/serviceinfo/serviceinfo';
 import { Table } from 'console-table-printer';
 import { LanguageModel } from '../depencecli';
 import ILanguageModel from '../languagemodel/ILanguageModel.inteface';

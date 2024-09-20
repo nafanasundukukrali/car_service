@@ -1,0 +1,74 @@
+services:
+  testdata:
+    build:
+      context: ./fake
+      dockerfile: Dockerfile
+    volumes: 
+      - ./fake/data:/app/data
+  dbtest:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=autoservicedb
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_INITDB_ARGS="--auth-host=scram-sha-256"
+    network_mode: 'host'
+    ports:
+      - 5000:5000
+    volumes: 
+      - pgtestdata:/var/lib/postgresql/data
+      - ./databasescripts/postgre/pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./fake/data/:/tmp/data/
+      - ./fake/data/test:/tmp/data/test
+      - ./databasescripts/postgre:/docker-entrypoint-initdb.d
+    restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "--host=localhost", "--port=5000"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    env_file:
+     - .env
+    command: postgres -p 5000 -c passwd.value=$POSTGRES_PASSWORD -c usr.uuid=$POSTGRES_UUID -c mode.type="test"
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=autoservicedb
+      - POSTGRES_USER=$POSTGRES_USER
+      - POSTGRES_PASSWORD=$POSTGRES_PASSWORD
+      - PGDATA=/var/lib/postgresql/data/pgdata
+      - POSTGRES_INITDB_ARGS="--auth-host=scram-sha-256"
+    network_mode: 'host'
+    ports:
+      - 5000:5000
+    volumes: 
+      - pgtestdata:/var/lib/postgresql/data
+      - ./databasescripts/postgre/pg_hba.conf:/etc/postgresql/pg_hba.conf
+      - ./fake/data/:/tmp/data/
+      - ./fake/data/test:/tmp/data/test
+      - ./databasescripts/postgre/1_init_db.sql:/docker-entrypoint-initdb.d/1_init_db.sql
+    restart: always
+    healthcheck:
+      test: ["CMD", "pg_isready", "--host=localhost", "--port=5000"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    env_file:
+     - .env
+    command: postgres -p 5000 -c passwd.value=$POSTGRES_PASSWORD -c usr.uuid=$POSTGRES_UUID -c mode.type="test"
+  tests:
+    build:
+      context: .
+      dockerfile: ./test/Dockerfile
+    network_mode: 'host'
+    volumes:
+      - .:/app
+    depends_on:
+      dbtest:
+        condition: service_healthy
+    # links:
+    #   - dbtest
+    command: yarn test
+volumes:
+  pgtestdata:

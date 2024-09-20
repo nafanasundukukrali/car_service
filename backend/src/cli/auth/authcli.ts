@@ -1,18 +1,19 @@
 import "reflect-metadata";
-import { IClient } from '@blinterfaces/realization/IClient.interface';
+import { IClient } from '@asinterfaces/realization/IClient.interface';
 import Input from '../input/input';
-import { IAdmin } from '@blinterfaces/realization/IAdmin.interface';
-import { IMechanic } from '@blinterfaces/realization/IMechanic.interface';
-import Auth from '@blrealization/auth/auth';
-import { UserRoles } from '@bltypes/userinfo/userinfo';
-import { Id } from '@bltypes/id/id';
+import { IAdmin } from '@asinterfaces/realization/IAdmin.interface';
+import { IMechanic } from '@asinterfaces/realization/IMechanic.interface';
+import Auth from './auth';
+import { UserRoles } from '@astypes/userinfo/userinfo';
+import { Id } from '@astypes/id/id';
 import { container } from "tsyringe";
-import { AdminName, ClientName, MechanicName } from "@//bl/interfaces/realization/interfacesnames";
-import { AdminInfo } from '@//bl/types/admininfo/admininfo';
+import { AdminName, ClientName, MechanicName } from "@asinterfaces/realization/interfacesnames";
+import { AdminInfo } from '@astypes/admininfo/admininfo';
 import ILanguageModel from "../languagemodel/ILanguageModel.inteface";
 import { LanguageModel } from "../depencecli";
-import { ClientInfo } from "@//bl/types/clientinfo/clientinfo";
-import { NotRequireID } from '../../bl/types/helperpath/helpertypes';
+import { ClientInfo } from "@astypes/clientinfo/clientinfo";
+import { NotRequireID } from '@astypes/helperpath/helpertypes';
+import Logger from "@logger/logger";
 
 export default class AuthCLI {
     private _input: Input;
@@ -37,6 +38,7 @@ export default class AuthCLI {
     }
 
     async login() {
+        Logger.info("User login in system.")
         let admin = {fio: process.env.POSTGRES_USER, password: process.env.POSTGRES_PASSWORD, type: UserRoles.admin};
         await this._auth.hashPassword(admin);
 
@@ -59,6 +61,7 @@ export default class AuthCLI {
                     if (code === this._lm.yes)
                         return;
                 }
+            
                 else {
                     try {
                         usr.id = userf[0].id
@@ -70,11 +73,17 @@ export default class AuthCLI {
                     }
                 }
             }
-            catch (error) {}
+            catch (error) 
+            {
+                Logger.error("No connection db");
+                console.log(this._lm.infoIncorrectData)
+            }
         }
     }  
 
     async registration() {
+        Logger.info("User registrate self");
+
         while (true)
         {
             let fio = await this._input.wait_until_input(this._lm.askFio, this._lm.outRegQuestion);
@@ -112,7 +121,11 @@ export default class AuthCLI {
                 await this._client.create(user, new Date());
                 return;
             }
-            catch (error) { console.log(error.message) }
+            catch (error) 
+            { 
+                console.log(this._lm.infoIncorrectData) 
+                Logger.info("Impossible create user with whis data");
+            }
 
             let out = await this._input.askQuestion(this._lm.outRegQuestion)
                 if (out === this._lm.yes)

@@ -1,11 +1,11 @@
 import { container, injectable } from "tsyringe";
-import { NotRequireID } from "@bltypes/helperpath/helpertypes";
+import { NotRequireID } from "@astypes/helperpath/helpertypes";
 import { prisma } from "../../prismaclient";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
-import { Id } from "@bltypes/id/id";
-import { AdminRepositoryName } from "@blinterfaces/repository/interfacesnames";
-import { IAdminRepository } from "@blinterfaces/repository/IAdminRepository.interface";
-import { AdminInfo } from "@bltypes/admininfo/admininfo";
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { Id } from "@astypes/id/id";
+import { AdminRepositoryName } from "@asinterfaces/repository/interfacesnames";
+import { IAdminRepository } from "@asinterfaces/repository/IAdminRepository.interface";
+import { AdminInfo } from "@astypes/admininfo/admininfo";
 
 @injectable()
 export class PsqlAdminRepository implements IAdminRepository

@@ -1,18 +1,18 @@
 import { container, injectable } from "tsyringe";
-import { IBoxRepository } from "@blinterfaces/repository/IBoxRepository,interface";
-import { BoxInfo } from "@bltypes/boxinfo/boxinfo";
-import { AdminInfo } from "@bltypes/admininfo/admininfo";
-import { IAdminRepository } from "@blinterfaces/repository/IAdminRepository.interface";
-import { ClientInfo } from "@bltypes/clientinfo/clientinfo";
-import { MechanicInfo } from "@bltypes/mechanicinfo/mechanicinfo";
-import { IMechanicRepository } from "@blinterfaces/repository/IMechanicRepository.interface";
-import { IClientRepository } from "@blinterfaces/repository/IClientRepository.interface";
-import { AdminRepositoryName, BoxRepositoryName, ClientRepositoryName, MechanicRepositoryName } from "@blinterfaces/repository/interfacesnames";
+import { IBoxRepository } from "@asinterfaces/repository/IBoxRepository,interface";
+import { BoxInfo } from "@astypes/boxinfo/boxinfo";
+import { AdminInfo } from "@astypes/admininfo/admininfo";
+import { IAdminRepository } from "@asinterfaces/repository/IAdminRepository.interface";
+import { ClientInfo } from "@astypes/clientinfo/clientinfo";
+import { MechanicInfo } from "@astypes/mechanicinfo/mechanicinfo";
+import { IMechanicRepository } from "@asinterfaces/repository/IMechanicRepository.interface";
+import { IClientRepository } from "@asinterfaces/repository/IClientRepository.interface";
+import { AdminRepositoryName, BoxRepositoryName, ClientRepositoryName, MechanicRepositoryName } from "@asinterfaces/repository/interfacesnames";
 import { RealizationBase } from "../realizationbase";
-import { IBox } from "@blinterfaces/realization/IBox.interface";
-import { NotRequireID } from "@bltypes/helperpath/helpertypes";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
-import { PositiveInteger } from "@bltypes/positiveinteger"
+import { IBox } from "@asinterfaces/realization/IBox.interface";
+import { NotRequireID } from "@astypes/helperpath/helpertypes";
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { PositiveInteger } from "@astypes/positiveinteger"
 
 @injectable()
 export class Box extends RealizationBase implements IBox

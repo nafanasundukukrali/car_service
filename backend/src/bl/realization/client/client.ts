@@ -1,18 +1,18 @@
 import { container, injectable } from "tsyringe";
-import { IClientRepository } from "@blinterfaces/repository/IClientRepository.interface";
-import { ClientInfo } from "@bltypes/clientinfo/clientinfo";
-import { AdminInfo } from '@bltypes/admininfo/admininfo';
+import { IClientRepository } from "@asinterfaces/repository/IClientRepository.interface";
+import { ClientInfo } from "@astypes/clientinfo/clientinfo";
+import { AdminInfo } from '@astypes/admininfo/admininfo';
 import { errorDataAccess, errorDateBirth, errorEmail, errorPhone, errorUserInDb } from '@blerrors/user/usererrors';
-import { MechanicInfo } from '@bltypes/mechanicinfo/mechanicinfo';
-import { NotRequireID} from "@bltypes/helperpath/helpertypes";
-import { IAdminRepository } from "@blinterfaces/repository/IAdminRepository.interface";
-import { IMechanicRepository } from "@blinterfaces/repository/IMechanicRepository.interface";
-import { Id } from "@bltypes/id/id";
-import { AdminRepositoryName, ClientRepositoryName, MechanicRepositoryName } from "@blinterfaces/repository/interfacesnames";
-import { IClient } from "@blinterfaces/realization/IClient.interface";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
+import { MechanicInfo } from '@astypes/mechanicinfo/mechanicinfo';
+import { NotRequireID} from "@astypes/helperpath/helpertypes";
+import { IAdminRepository } from "@asinterfaces/repository/IAdminRepository.interface";
+import { IMechanicRepository } from "@asinterfaces/repository/IMechanicRepository.interface";
+import { Id } from "@astypes/id/id";
+import { AdminRepositoryName, ClientRepositoryName, MechanicRepositoryName } from "@asinterfaces/repository/interfacesnames";
+import { IClient } from "@asinterfaces/realization/IClient.interface";
+import { UserRoles } from "@astypes/userinfo/userinfo";
 import { RealizationBase } from "../realizationbase";
-import { PositiveInteger } from "@bltypes/positiveinteger"
+import { PositiveInteger } from "@astypes/positiveinteger"
 
 @injectable()
 export class Client extends RealizationBase implements IClient

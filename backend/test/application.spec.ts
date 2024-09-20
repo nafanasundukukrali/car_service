@@ -3,7 +3,7 @@ import { container } from "tsyringe";
 import { expect } from 'chai';
 import 'mocha';
 import * as errors from '@blerrors/user/usererrors';
-import { Id } from "@bltypes/id/id";
+import { Id } from "@astypes/id/id";
 import { AdminRepositoryName,
         MechanicRepositoryName,
         SheduleRecordRepositoryName,
@@ -12,8 +12,8 @@ import { AdminRepositoryName,
         VocationRepositoryName,
         ClientRepositoryName,
         CarRepositoryName
- } from "@blinterfaces/repository/interfacesnames";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
+ } from "@asinterfaces/repository/interfacesnames";
+import { UserRoles } from "@astypes/userinfo/userinfo";
 import { Application } from "@blrealization/application/application";
 import { BLTestAdminCreateCorrectWork, BLTestAdminCreateUserExist, BLTestAdminNoUser } from "./bltest/bltestadmin";
 import { BLTestMechanicCreateCorrectWork, BLTestMechanicCreateUserExists } from "./bltest/bltestmechanic";
@@ -22,7 +22,7 @@ import { BLTestTimeTableRecordCreateUserExists, BLTestTimeTableRecordVocationRet
 import { BLTestApplicationCheckStatus, BLTestApplicationNormal } from "./bltest/bltestapplication";
 import { BLTestVocationCreateCorrectWork, BLTestVocationCreateUserExists } from "./bltest/bltestvocation";
 import { BLTestClientCreateCorrectWork, BLTestClientCreateErrorUserExist } from "./bltest/bltestclient";
-import { TimeTableRecordInfo } from "@//bl/types/timetablerecordinfo/timetablerecordinfo";
+import { TimeTableRecordInfo } from "@astypes/timetablerecordinfo/timetablerecordinfo";
 import { errorImpossibleCreateTimeTableRecord, errorImpossibleUpdateRecord } from "@//bl/errors/timetablerecord/timtablerecorderrors";
 import { BLTestCarApplicationCcorect, BLTestCarApplicationInccorect, BLTestCarExistsCorrect } from "./bltest/bltestcar";
 

@@ -1,19 +1,30 @@
-import express, { Express, Request, Response } from "express";
-import dotenv from "dotenv";
-import "reflect-metadata";
+// import "reflect-metadata";
 
-dotenv.config();
+import RegisterDependency from './registerdependency';
+import CLI from "./cli";
+import Logger from "@logger/logger";
 
-const app: Express = express();
-const port = process.env.EXPRESS_PORT || 3000;
+Logger.info("===================  START  =====================")
+new RegisterDependency();
+let cln = new CLI();
+await cln.run();
+Logger.info("=================== THE END =====================")
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
-});
+// import express, { Express, Request, Response } from "express";
+// import dotenv from "dotenv";
 
-app.listen(port, () => {
-  console.log(`[server]: Server is running at http://localhost:${port}`);
-});
+// dotenv.config();
+
+// const app: Express = express();
+// const port = process.env.EXPRESS_PORT || 3000;
+
+// app.get("/", (req: Request, res: Response) => {
+//   res.send("Express + TypeScript Server");
+// });
+
+// app.listen(port, () => {
+//   console.log(`[server]: Server is running at http://localhost:${port}`);
+// });
 
 
 // app.use(express.json());

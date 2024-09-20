@@ -1,10 +1,10 @@
 import { expect, assert } from 'chai';
 import 'mocha';
 import { container } from 'tsyringe';
-import { AdminRepositoryName } from '@blinterfaces/repository/interfacesnames';
+import { AdminRepositoryName } from '@asinterfaces/repository/interfacesnames';
 import { DAInjectionReg } from '@da/dainjection';
-import { IAdminRepository } from '@blinterfaces/repository/IAdminRepository.interface';
-import { UserRoles } from '@bltypes/userinfo/userinfo';
+import { IAdminRepository } from '@asinterfaces/repository/IAdminRepository.interface';
+import { UserRoles } from '@astypes/userinfo/userinfo';
 
 new DAInjectionReg();
 const admin: IAdminRepository = container.resolve(AdminRepositoryName);

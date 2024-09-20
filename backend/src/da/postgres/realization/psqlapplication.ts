@@ -1,11 +1,10 @@
-import { IApplicationRepository } from "@blinterfaces/repository/IApplicationRepository.interface";
+import { IApplicationRepository } from "@asinterfaces/repository/IApplicationRepository.interface";
 import { injectable } from "tsyringe";
 import { prisma } from "../../prismaclient";
-import { NotRequireID } from "@bltypes/helperpath/helpertypes";
-import { ApplicationInfo } from "@bltypes/applicationinfo/applicationinfo";
-import { get_status_by_id } from "@//bl/realization/applicationstatus/applicationstatus";
-import { get_application_status_id } from '../../../bl/realization/applicationstatus/applicationstatus';
-import { Id } from "@bltypes/id/id";
+import { NotRequireID } from "@astypes/helperpath/helpertypes";
+import { ApplicationInfo } from "@astypes/applicationinfo/applicationinfo";
+import { get_status_by_id, get_application_status_id  } from "@astypes/applicationstatus/applicationstatus";
+import { Id } from "@astypes/id/id";
 
 @injectable()
 export class PsqlApplicationRepository implements IApplicationRepository
@@ -111,20 +110,23 @@ export class PsqlApplicationRepository implements IApplicationRepository
         let res: ApplicationInfo[] = []
         for (let i = 0; i < resBD.length; i++)
         {
-            res.push({
-                id: new Id(resBD[i]?.id),
-                car: resBD[i]?.car,
-                mechanicComment: resBD[i]?.comment,
-                timeRecord: {
-                    id: new Id(resBD[i]?.timetable?.id),
-                    sheduleRecord: new Id(resBD[i]?.timetable?.shedule),
-                    dateTime: resBD[i]?.timetable?.datetime,
-                    duration: resBD[i]?.service_application_serviceToservice?.canbeserved_canbeserved_serviceToservice[0]?.hours
-                },
-                service: new Id(resBD[i]?.service),
-                status: get_status_by_id(new Id(resBD[i]?.status)),
-                client: new Id(resBD[i]?.car_application_carTocar.owner_)
-            });
+            if (info.timeRecord && (info.timeRecord.dateTime && resBD[i]?.timetable?.datetime.getTime() === info.timeRecord.dateTime.getTime() ||
+                info.timeRecord.sheduleRecord && resBD[i]?.timetable?.shedule == info.timeRecord.sheduleRecord.getStringVersion()) ||
+                !info.timeRecord || !info.timeRecord.sheduleRecord && !info.timeRecord.dateTime)
+                res.push({
+                    id: new Id(resBD[i]?.id),
+                    car: resBD[i]?.car,
+                    mechanicComment: resBD[i]?.comment,
+                    timeRecord: {
+                        id: new Id(resBD[i]?.timetable?.id),
+                        sheduleRecord: new Id(resBD[i]?.timetable?.shedule),
+                        dateTime: resBD[i]?.timetable?.datetime,
+                        duration: resBD[i]?.service_application_serviceToservice?.canbeserved_canbeserved_serviceToservice[0]?.hours
+                    },
+                    service: new Id(resBD[i]?.service),
+                    status: get_status_by_id(new Id(resBD[i]?.status)),
+                    client: new Id(resBD[i]?.car_application_carTocar.owner_)
+                });
         }
 
         return res;

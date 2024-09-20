@@ -1,17 +1,18 @@
 import { container, injectable } from "tsyringe";
-import { IServiceRepository } from "@//bl/interfaces/repository/IServiceRepository.interface";
-import { ServiceInfo } from "@bltypes/serviceinfo/serviceinfo";
-import { AdminInfo } from "@bltypes/admininfo/admininfo";
-import { IAdminRepository } from "@//bl/interfaces/repository/IAdminRepository.interface";
-import { MechanicInfo } from "@bltypes/mechanicinfo/mechanicinfo";
-import { IClientRepository } from "@//bl/interfaces/repository/IClientRepository.interface";
-import { IMechanicRepository } from "@//bl/interfaces/repository/IMechanicRepository.interface";
-import { ClientInfo } from "@bltypes/clientinfo/clientinfo";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
+import { IServiceRepository } from "@asinterfaces/repository/IServiceRepository.interface";
+import { ServiceInfo } from "@astypes/serviceinfo/serviceinfo";
+import { AdminInfo } from "@astypes/admininfo/admininfo";
+import { IAdminRepository } from "@asinterfaces/repository/IAdminRepository.interface";
+import { MechanicInfo } from "@astypes/mechanicinfo/mechanicinfo";
+import { IClientRepository } from "@asinterfaces/repository/IClientRepository.interface";
+import { IMechanicRepository } from "@asinterfaces/repository/IMechanicRepository.interface";
+import { ClientInfo } from "@astypes/clientinfo/clientinfo";
+import { UserRoles } from "@astypes/userinfo/userinfo";
 import { RealizationBase } from "../realizationbase";
-import { IService } from "@blinterfaces/realization/IService.interface"
-import { AdminRepositoryName, ClientRepositoryName, MechanicRepositoryName, ServiceRepositoryName } from "../../interfaces/repository/interfacesnames";
-import { PositiveInteger } from "@bltypes/positiveinteger"
+import { IService } from "@asinterfaces/realization/IService.interface"
+import { AdminRepositoryName, ClientRepositoryName, MechanicRepositoryName, ServiceRepositoryName } from "@asinterfaces/repository/interfacesnames";
+import { PositiveInteger } from "@astypes/positiveinteger"
+import Logger from "@logger/logger";
 
 @injectable()
 export class Service extends RealizationBase implements IService
@@ -33,6 +34,8 @@ export class Service extends RealizationBase implements IService
     async search(info:  Partial<ServiceInfo>, initiator: AdminInfo | ClientInfo | MechanicInfo | undefined,
                                     pass?: number, count?: number): Promise<undefined | ServiceInfo []>
     {
+        Logger.info("Search service information user id", initiator);
+
         switch (initiator.type) 
         {
             case UserRoles.admin:
@@ -42,17 +45,19 @@ export class Service extends RealizationBase implements IService
                 await this._validate_existing_user(initiator.id, this._clientRepository.search);
                 break;
             default:
-                await this._validate_existing_user(initiator.id, this._mechanicRepository.search);;
+                await this._validate_existing_user(initiator.id, this._mechanicRepository.search);
                 break;
         }
 
-        const foundedData: undefined | ServiceInfo [] = await this._serviceRepository.search(info, pass, count);
+        let res = await this._serviceRepository.search(info, pass, count);
 
-        return foundedData;
+        return res;
     }
 
     async getListOfAll(initiator: AdminInfo | ClientInfo | MechanicInfo | undefined, pass?: PositiveInteger, count?: PositiveInteger): Promise<ServiceInfo[]>
     {
+        Logger.info("Get list of all services user by id = ", initiator.id.getStringVersion());
+
         let result: ServiceInfo[];
         result = await this._serviceRepository.getListOfAll(pass, count);        
         return result;

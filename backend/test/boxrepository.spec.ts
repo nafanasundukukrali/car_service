@@ -1,10 +1,10 @@
 import { expect, assert } from 'chai';
 import 'mocha';
 import { container } from 'tsyringe';
-import { BoxRepositoryName } from '@blinterfaces/repository/interfacesnames';
+import { BoxRepositoryName } from '@asinterfaces/repository/interfacesnames';
 import { DAInjectionReg } from '@da/dainjection';
-import { IBoxRepository } from '@blinterfaces/repository/IBoxRepository,interface';
-import { BoxInfo } from '@bltypes/boxinfo/boxinfo';
+import { IBoxRepository } from '@asinterfaces/repository/IBoxRepository,interface';
+import { BoxInfo } from '@astypes/boxinfo/boxinfo';
 
 new DAInjectionReg();
 const box: IBoxRepository = container.resolve(BoxRepositoryName);

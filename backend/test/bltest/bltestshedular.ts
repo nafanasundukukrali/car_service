@@ -1,8 +1,8 @@
 import { injectable } from "tsyringe";
-import { SheduleRecordInfo } from '@bltypes/shedulerecordinfo/shedulerecordinfo';
-import { ISheduleRecordRepository } from '@blinterfaces/repository/ISheduleRecordRepository.interface';
-import { NotRequireID } from '@bltypes/helperpath/helpertypes';
-import { Id } from '@bltypes/id/id';
+import { SheduleRecordInfo } from '@astypes/shedulerecordinfo/shedulerecordinfo';
+import { ISheduleRecordRepository } from '@asinterfaces/repository/ISheduleRecordRepository.interface';
+import { NotRequireID } from '@astypes/helperpath/helpertypes';
+import { Id } from '@astypes/id/id';
 import { assert } from "chai";
 import { isAchived } from "@blrealization/changeachivedstatus/changeachivedstatus";
 

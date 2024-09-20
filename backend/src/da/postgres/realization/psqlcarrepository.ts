@@ -1,8 +1,8 @@
 import { container, injectable } from "tsyringe";
 import { prisma } from "../../prismaclient";
-import { Id } from "@bltypes/id/id";
-import { ICarRepository } from '@blinterfaces/repository/ICarRepository.interface';
-import { CarInfo } from '@bltypes/carinfo/carinfo';
+import { Id } from "@astypes/id/id";
+import { ICarRepository } from '@asinterfaces/repository/ICarRepository.interface';
+import { CarInfo } from '@astypes/carinfo/carinfo';
 
 @injectable()
 export class PsqlCarRepository implements ICarRepository

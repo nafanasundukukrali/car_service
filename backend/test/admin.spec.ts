@@ -5,11 +5,11 @@ import { expect, assert } from 'chai';
 import 'mocha';
 import * as errors from '@blerrors/user/usererrors';
 import { BLTestAdminCreateCorrectWork, BLTestAdminCreateExistingEmail, BLTestAdminCreateUserExist, BLTestAdminNotCreateCorrectWork, BLTestAdminNotExists, BLTestAdminUpdateInfoUser} from "./bltest/bltestadmin";
-import { AdminInfo } from "@bltypes/admininfo/admininfo";
-import { Id } from "@bltypes/id/id";
-import { AdminRepositoryName } from "@//bl/interfaces/repository/interfacesnames";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
-import { PositiveInteger } from '../src/bl/types/positiveinteger';
+import { AdminInfo } from "@astypes/admininfo/admininfo";
+import { Id } from "@astypes/id/id";
+import { AdminRepositoryName } from "@asinterfaces/repository/interfacesnames";
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { PositiveInteger } from '@astypes/positiveinteger';
 
 describe('create admin', () => {
     it('correct data input', async () => {

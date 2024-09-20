@@ -3,20 +3,20 @@ import { container } from "tsyringe";
 import { expect, assert } from 'chai';
 import 'mocha';
 import * as errors from '../src/bl/errors/user/usererrors';
-import { Id } from "@bltypes/id/id";
-import { MechanicInfo } from "@//bl/types/mechanicinfo/mechanicinfo";
+import { Id } from "@astypes/id/id";
+import { MechanicInfo } from "@astypes/mechanicinfo/mechanicinfo";
 import { Mechanic } from "@//bl/realization/mechanic/mechanic";
-import { IMechanicRepository } from "@//bl/interfaces/repository/IMechanicRepository.interface";
+import { IMechanicRepository } from "@asinterfaces/repository/IMechanicRepository.interface";
 import { BLTestAdminCreateUserExist } from "./bltest/bltestadmin";
-import { AdminRepositoryName, ApplicationRepositoryName, MechanicRepositoryName, SheduleRecordRepositoryName, TimeTableRecordRepositoryName } from "@//bl/interfaces/repository/interfacesnames";
+import { AdminRepositoryName, ApplicationRepositoryName, MechanicRepositoryName, SheduleRecordRepositoryName, TimeTableRecordRepositoryName } from "@asinterfaces/repository/interfacesnames";
 import { BLTestMechanicCreateCorrectWork, BLTestMechanicCreateUserExists, BLTestMechanicCreateExistingEmail } from './bltest/bltestmechanic';
 import { BLTestSheduleRecordCreateUserExists } from './bltest/bltestshedular';
 import { BLTestTimeTableRecordCreateCorrectWork } from "./bltest/bltimetablerecord";
 import { BLTestApplicationNormal } from "./bltest/bltestapplication";
-import { UserRoles } from "@bltypes/userinfo/userinfo";
-import { MechanicStatus } from '../src/bl/types/mechanicstatus/mechanicstatus';
-import { BaseStatus } from "@bltypes/basestatus/basestatus";
-import { AchivedStatusType } from "@//bl/types/achivedstatus/achivedstatus";
+import { UserRoles } from "@astypes/userinfo/userinfo";
+import { MechanicStatus } from '@astypes/mechanicstatus/mechanicstatus';
+import { BaseStatus } from "@astypes/basestatus/basestatus";
+import { AchivedStatusType } from "@astypes/achivedstatus/achivedstatus";
 
 describe('create mehcanic', () => {
     it('correct data input', async () => {
